@@ -1,0 +1,48 @@
+# Millo monitoring stack — Prometheus + Grafana (+ API error tracking via Sentry DSN on the API host, not in this compose).
+# Usage: cd infra/monitoring && docker compose up -d
+# Grafana: http://localhost:3001 (admin/admin — change on first login)
+# Prometheus: http://localhost:9090 — scrapes API GET /metrics (see prometheus.yml)
+# Enterprise JSON: GET /admin/metrics/system|payments|live|queues|observability (admin or ops Bearer)
+# Optional: GRAFANA_EXTERNAL_URL / MILLO_GRAFANA_URL in API .env for hyperlinks in observability payloads
+# https://milloapp.com
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.47.0
+    container_name: millo-prometheus
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:10.2.0
+    container_name: millo-grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=https://milloapp.com
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+    volumes:
+      - ./grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - grafana_data:/var/lib/grafana
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+volumes:
+  prometheus_data: {}
+  grafana_data: {}

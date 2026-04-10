@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- ── Core pages ── -->
+  <url><loc>https://milloapp.com/</loc>              <changefreq>weekly</changefreq> <priority>1.0</priority></url>
+  <url><loc>https://milloapp.com/live</loc>          <changefreq>daily</changefreq>  <priority>0.9</priority></url>
+  <url><loc>https://milloapp.com/feed</loc>          <changefreq>daily</changefreq>  <priority>0.9</priority></url>
+  <url><loc>https://milloapp.com/search</loc>        <changefreq>daily</changefreq>  <priority>0.8</priority></url>
+  <url><loc>https://milloapp.com/vod</loc>           <changefreq>daily</changefreq>  <priority>0.8</priority></url>
+
+  <!-- ── Creator tools ── -->
+  <url><loc>https://milloapp.com/creator/milla</loc> <changefreq>weekly</changefreq> <priority>0.8</priority></url>
+  <url><loc>https://milloapp.com/creator-apply</loc> <changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://milloapp.com/go-live</loc>       <changefreq>monthly</changefreq><priority>0.6</priority></url>
+
+  <!-- ── Commerce ── -->
+  <url><loc>https://milloapp.com/coins</loc>         <changefreq>weekly</changefreq> <priority>0.8</priority></url>
+  <url><loc>https://milloapp.com/pricing</loc>       <changefreq>weekly</changefreq> <priority>0.8</priority></url>
+
+  <!-- ── Auth ── -->
+  <url><loc>https://milloapp.com/signup</loc>        <changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://milloapp.com/login</loc>         <changefreq>monthly</changefreq><priority>0.6</priority></url>
+
+  <!-- ── Support / legal ── -->
+  <url><loc>https://milloapp.com/support</loc>       <changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://milloapp.com/help</loc>          <changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://milloapp.com/terms</loc>         <changefreq>yearly</changefreq> <priority>0.5</priority></url>
+  <url><loc>https://milloapp.com/privacy</loc>       <changefreq>yearly</changefreq> <priority>0.5</priority></url>
+
+</urlset>

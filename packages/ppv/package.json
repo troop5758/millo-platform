@@ -1,0 +1,12 @@
+{
+  "name": "@millo/ppv",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Millo Advanced PPV System — pricing, unlock, bundles, analytics",
+  "main": "src/index.js",
+  "engines": { "node": ">=18.0.0" },
+  "dependencies": {
+    "@millo/database": "3.0.0",
+    "@millo/economy": "3.0.0"
+  }
+}

@@ -1,0 +1,11 @@
+# NGINX — example for Millo 3.0
+# Production: https://milloapp.com
+# Upstream to API (Fastify) and/or static (web).
+
+# upstream api { server 127.0.0.1:3000; }
+# server {
+#   listen 443 ssl;
+#   server_name milloapp.com www.milloapp.com;
+#   # ssl_certificate ...;
+#   # location / { proxy_pass http://api; }
+# }

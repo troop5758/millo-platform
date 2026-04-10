@@ -1,0 +1,14 @@
+{
+  "name": "@millo/payment-orchestration",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Payment & Payout orchestration — controllers, services, models",
+  "main": "index.js",
+  "engines": { "node": ">=18.0.0" },
+  "dependencies": {
+    "@millo/database": "3.0.0",
+    "@millo/economy": "3.0.0",
+    "@millo/billing": "3.0.0",
+    "mongoose": "^8.0.0"
+  }
+}

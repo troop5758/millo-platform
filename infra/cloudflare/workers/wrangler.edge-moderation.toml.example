@@ -1,0 +1,14 @@
+# Rename to wrangler.toml (or merge into your main Wrangler config).
+# Part 8 — edge moderation worker. https://milloapp.com
+name = "millo-edge-moderation"
+main = "edge-moderation.example.js"
+compatibility_date = "2024-01-01"
+
+# Example: run only on API chat-like paths (adjust to your routes).
+# [[routes]]
+# pattern = "api.milloapp.com/api/chat*"
+# zone_name = "milloapp.com"
+
+[vars]
+# BANNED_SUBSTRINGS = "spam_phrase,another_bad_word"
+SPAM_CHECK = "true"

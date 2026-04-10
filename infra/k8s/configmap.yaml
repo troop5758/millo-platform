@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: millo-config
+  namespace: millo
+  labels:
+    app.kubernetes.io/name: millo
+data:
+  NODE_ENV: "production"
+  APP_URL: "https://milloapp.com"
+  API_URL: "https://api.milloapp.com"

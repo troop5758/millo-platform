@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  namespace: millo
+spec:
+  # Must match the headless Service name (`service-redis.yaml`)
+  serviceName: redis
+  replicas: 6
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7.2-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: redis
+              containerPort: 6379
+            - name: redis-bus
+              containerPort: 16379
+          env:
+            # Optional: if present, Redis will be started with `--requirepass`
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: millo-secrets
+                  key: REDIS_PASSWORD
+                  optional: true
+          command:
+            - sh
+            - -c
+          # Without `--requirepass`, this Redis is reachable only inside the cluster network.
+          # Production should set `REDIS_PASSWORD` via `millo-secrets`.
+          args:
+            - |
+              set -e
+              if [ -n "${REDIS_PASSWORD:-}" ]; then
+                exec redis-server --bind 0.0.0.0 --appendonly yes --requirepass "${REDIS_PASSWORD}"
+              fi
+              exec redis-server --bind 0.0.0.0 --appendonly yes
+          readinessProbe:
+            tcpSocket:
+              port: 6379
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 6379
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      terminationGracePeriodSeconds: 10
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 10Gi

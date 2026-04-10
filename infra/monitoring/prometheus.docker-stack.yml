@@ -1,0 +1,35 @@
+# Prometheus — scrape targets when API runs as Docker service `api` on network `millo`.
+# Used by repo-root docker-compose.yml. For API on the host only, use prometheus.yml instead.
+# https://milloapp.com
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+        # Production: add Alertmanager, e.g. - targets: ['alertmanager:9093']
+
+rule_files:
+  - /etc/prometheus/alerts.yml
+
+scrape_configs:
+  - job_name: 'millo-api'
+    static_configs:
+      - targets: ['api:3000']
+    metrics_path: /metrics
+    scrape_interval: 10s
+
+  # Optional: redis_exporter on the Docker host (:9121). Requires `extra_hosts: host-gateway` on Prometheus.
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['host.docker.internal:9121']
+    scrape_interval: 15s
+
+  # Optional: Kafka exporter on the host (:9308).
+  - job_name: 'kafka'
+    static_configs:
+      - targets: ['host.docker.internal:9308']
+    scrape_interval: 15s

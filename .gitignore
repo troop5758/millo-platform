@@ -1,0 +1,66 @@
+# ── Dependencies ──────────────────────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+
+# ── Environment / secrets ─────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+
+# ── Build output ──────────────────────────────────────────────────────────────
+dist/
+build/
+out/
+.next/
+.nuxt/
+.expo/
+.expo-shared/
+packages/web/dist/
+packages/api/dist/
+packages/mobile/.expo/
+packages/mobile/android/
+packages/mobile/ios/
+
+# ── PM2 / deploy ─────────────────────────────────────────────────────────────
+logs/
+!logs/.gitkeep
+.deploy-backup/
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# ── OS / editor ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+*.suo
+*.user
+
+# ── Test / coverage ───────────────────────────────────────────────────────────
+coverage/
+.nyc_output/
+*.lcov
+
+# ── TypeScript ────────────────────────────────────────────────────────────────
+*.tsbuildinfo
+
+# ── Security scan reports ─────────────────────────────────────────────────────
+scripts/security/reports/
+zap-report.html
+zap-report.json
+
+# ── Misc ──────────────────────────────────────────────────────────────────────
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+.parcel-cache
+.turbo

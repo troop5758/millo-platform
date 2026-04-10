@@ -1,0 +1,25 @@
+# Janus Streaming plugin — RTP mountpoints for Millo live streams
+# Streams are created dynamically via API; this is a sample static mountpoint.
+# FFmpeg/OBS can push RTP to these ports for WebRTC distribution.
+
+general: {
+  admin_key = "millo_janus_admin"
+  rtp_port_range = "20000-40000"
+}
+
+# Sample RTP mountpoint — replace with dynamic creation via Janus Admin API
+millo-live-sample: {
+  type = "rtp"
+  id = 1
+  description = "Millo live stream (Opus/VP8)"
+  metadata = "{\"platform\":\"millo\"}"
+  audio = true
+  video = true
+  audioport = 5002
+  audiopt = 111
+  audiocodec = "opus"
+  videoport = 5004
+  videopt = 100
+  videocodec = "vp8"
+  secret = "millo_stream_secret"
+}

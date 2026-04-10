@@ -1,0 +1,11 @@
+# Cloudflare Workers / Pages config (optional)
+# Rename to wrangler.toml and configure
+name = "millo-cdn"
+compatibility_date = "2024-01-01"
+
+# For Workers that add cache headers or edge logic
+# [vars]
+# API_ORIGIN = "https://api.milloapp.com"
+
+# Part 8 — edge chat/spam moderation Worker (separate deploy):
+# See infra/cloudflare/edge-ai-moderation.md and infra/cloudflare/workers/wrangler.edge-moderation.toml.example

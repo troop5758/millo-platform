@@ -1,0 +1,16 @@
+{
+  "name": "@millo/billing",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Billing & Payouts — Stripe, PayPal, idempotency, admin approval",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test src/*.test.js"
+  },
+  "engines": { "node": ">=18.0.0" },
+  "dependencies": {
+    "@millo/database": "3.0.0",
+    "@millo/economy": "3.0.0",
+    "mongoose": "^8.0.0"
+  }
+}

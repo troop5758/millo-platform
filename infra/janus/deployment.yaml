@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: millo-janus
+  namespace: millo
+  labels:
+    app: millo-janus
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: millo-janus
+  template:
+    metadata:
+      labels:
+        app: millo-janus
+    spec:
+      containers:
+        - name: janus
+          image: millo/janus:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8088   # HTTP
+            - containerPort: 8089   # HTTPS
+            - containerPort: 8188   # WebSocket
+            - containerPort: 8189   # WebSocket Secure
+            - containerPort: 10000
+              protocol: UDP
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "1000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: millo-janus
+  namespace: millo
+spec:
+  selector:
+    app: millo-janus
+  ports:
+    - name: http
+      port: 8088
+      targetPort: 8088
+    - name: ws
+      port: 8188
+      targetPort: 8188
+    - name: rtp
+      port: 10000
+      targetPort: 10000
+      protocol: UDP
+  type: LoadBalancer

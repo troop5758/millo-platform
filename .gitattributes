@@ -1,0 +1,3 @@
+# Avoid CRLF drift on Linux deploy targets and bash scripts.
+*.sh text eol=lf
+infra/*.sh text eol=lf

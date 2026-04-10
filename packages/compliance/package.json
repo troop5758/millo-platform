@@ -1,0 +1,15 @@
+{
+  "name": "@millo/compliance",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Compliance & Safety — GDPR DSAR, age gating, consent logging.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test src/dsar.test.js src/ageGating.test.js"
+  },
+  "engines": { "node": ">=18.0.0" },
+  "dependencies": {
+    "@millo/database": "3.0.0",
+    "@millo/economy": "3.0.0"
+  }
+}

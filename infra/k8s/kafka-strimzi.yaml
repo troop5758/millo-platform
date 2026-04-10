@@ -1,0 +1,28 @@
+# Strimzi Kafka Cluster (Event Backbone) — Phase 4 / Part 4
+# Domain: https://milloapp.com (app endpoints); Kafka is internal to the platform.
+#
+# Deploy this into each region's Kubernetes cluster (US/EU/ASIA).
+# - Run once per region cluster
+# - Keep `metadata.name: millo-kafka` consistent within that region
+# - MirrorMaker2 manifests will reference each region's Kafka bootstrap service.
+#
+# Notes:
+# - This repo uses a single ioredis client (no Redis Cluster mode). Kafka uses
+#   `KAFKA_BROKERS` env vars in `packages/api` and workers.
+
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: millo-kafka
+  namespace: millo
+spec:
+  kafka:
+    replicas: 3
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+  zookeeper:
+    replicas: 3
+

@@ -1,0 +1,8 @@
+{
+  "name": "@millo/security",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Security hardening — CSP, HSTS, rate limit, kill-switch, secrets.",
+  "main": "src/index.js",
+  "engines": { "node": ">=18.0.0" }
+}

@@ -1,0 +1,183 @@
+# Prometheus alert rules — Millo platform.
+# SRE tiers: label `priority` is for Alertmanager routing (PagerDuty / Slack).
+# Tune `job` names and absent metrics to match your scrape config (exporters optional).
+# https://milloapp.com
+
+groups:
+  - name: millo_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(millo_http_requests_total{status=~"5.."}[5m]) > 5
+        for: 2m
+        labels:
+          severity: critical
+          priority: P0
+        annotations:
+          summary: "High 5xx error rate on Millo API"
+          description: "5xx error rate is {{ $value | humanize }} req/s (threshold 5)"
+
+      # P0 — share of all HTTP responses that are 5xx (wake-up: widespread API failure).
+      - alert: APIHighFailureRate
+        expr: |
+          (
+            sum(rate(millo_http_requests_total{status=~"5.."}[5m]))
+            /
+            clamp_min(sum(rate(millo_http_requests_total[5m])), 1e-9)
+          ) > 0.5
+        for: 2m
+        labels:
+          severity: critical
+          priority: P0
+        annotations:
+          summary: "API failure rate above 50%"
+          description: "More than half of HTTP responses are 5xx over 2m (excluding scrape gaps)."
+
+      # P0 — payment routes only; route label is first 3 path segments (see metrics.js).
+      - alert: PaymentsHighFailureRate
+        expr: |
+          (
+            sum(rate(millo_http_requests_total{route=~"/payments.*",status=~"5.."}[5m]))
+            /
+            clamp_min(sum(rate(millo_http_requests_total{route=~"/payments.*"}[5m])), 1e-9)
+          ) > 0.2
+        for: 3m
+        labels:
+          severity: critical
+          priority: P0
+        annotations:
+          summary: "Payments HTTP failure rate above 20%"
+          description: "5xx share on /payments* routes > 20% for 3m. Cross-check provider dashboards and millo_payment_errors_total."
+
+      - alert: PaymentErrorsSpike
+        expr: sum(rate(millo_payment_errors_total[5m])) > 0.5
+        for: 5m
+        labels:
+          severity: critical
+          priority: P0
+        annotations:
+          summary: "Payment error counter spiking"
+          description: "millo_payment_errors_total rate > 0.5/s — tune threshold to your traffic."
+
+      - alert: SlowAPI
+        expr: histogram_quantile(0.95, rate(millo_http_request_duration_seconds_bucket[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+          priority: P1
+        annotations:
+          summary: "Slow API response times"
+          description: "95th percentile latency > 2s"
+
+      - alert: APIDown
+        expr: up{job="millo-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          priority: P0
+        annotations:
+          summary: "Millo API is down"
+          description: "API target has been unreachable for 1 minute"
+
+      - alert: HighMemoryUsage
+        # Default Node metrics use prefix millo_ (see packages/api/src/routes/metrics.js)
+        expr: millo_process_resident_memory_bytes / 1024 / 1024 > 512
+        for: 5m
+        labels:
+          severity: warning
+          priority: P2
+        annotations:
+          summary: "High API memory usage"
+          description: "Process memory > 512MB"
+
+      - alert: SlowStreamGoLive
+        expr: histogram_quantile(0.95, sum(rate(millo_stream_latency_ms_bucket[5m])) by (le)) > 3000
+        for: 5m
+        labels:
+          severity: warning
+          priority: P1
+        annotations:
+          summary: "Slow live go-live path"
+          description: "P95 stream go-live latency (startStream + Janus) > 3s"
+
+      # P1 — API go-live path only (not full CDN/SFU E2E).
+      - alert: LiveGoLiveLatencySLOBreached
+        expr: histogram_quantile(0.95, sum(rate(millo_stream_latency_ms_bucket[5m])) by (le)) > 1000
+        for: 5m
+        labels:
+          severity: warning
+          priority: P1
+        annotations:
+          summary: "Live go-live p95 above 1s"
+          description: "millo_stream_latency_ms p95 > 1000ms — investigate API + Janus path."
+
+      # P1 — feed build (API histogram); not full client E2E.
+      - alert: FeedBuildLatencyHigh
+        expr: histogram_quantile(0.95, sum(rate(millo_feed_build_duration_seconds_bucket[5m])) by (le)) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+          priority: P1
+        annotations:
+          summary: "Feed build p95 above 500ms"
+          description: "millo_feed_build_duration_seconds p95 > 0.5s for 5m"
+
+      # P1 — BullMQ-backed queues on API process (waiting jobs).
+      - alert: QueueWaitingBacklogHigh
+        expr: sum(millo_queue_depth{state="waiting"}) by (queue) > 1000
+        for: 10m
+        labels:
+          severity: warning
+          priority: P1
+        annotations:
+          summary: "Queue waiting backlog high"
+          description: "Queue {{ $labels.queue }} has > 1000 waiting jobs for 10m — tune threshold per queue."
+
+      # Requires Kafka exporter (e.g. Strimzi Kafka Exporter or danielqsj/kafka-exporter) scraped as job kafka.
+      # Adjust metric name to match your exporter (e.g. kafka_consumergroup_lag_sum).
+      - alert: HighKafkaConsumerLag
+        expr: sum(kafka_consumergroup_lag) by (consumergroup) > 50000
+        for: 10m
+        labels:
+          severity: warning
+          priority: P2
+        annotations:
+          summary: "High Kafka consumer lag"
+          description: "Total lag for consumergroup {{ $labels.consumergroup }} exceeds threshold"
+
+      # P0 — only if `job_name: kafka` is in prometheus.yml (otherwise no series; no alert).
+      - alert: KafkaExporterDown
+        expr: up{job="kafka"} == 0
+        for: 3m
+        labels:
+          severity: critical
+          priority: P0
+        annotations:
+          summary: "Kafka metrics scrape target down"
+          description: "Prometheus cannot scrape Kafka exporter — cluster or exporter unhealthy. Remove kafka job from Prometheus if Kafka is unused."
+
+      # P0 — add a Mongo scrape job (e.g. percona/mongodb_exporter) as job_name: mongodb, then enable.
+      - alert: MongoDBExporterDown
+        expr: up{job="mongodb"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          priority: P0
+        annotations:
+          summary: "MongoDB metrics scrape target down"
+          description: "Prometheus cannot scrape MongoDB exporter — verify DB and scrape config."
+
+      # Requires redis_exporter (oliver006/redis_exporter) — server-wide keyspace hits/misses.
+      - alert: LowRedisHitRatio
+        expr: |
+          (
+            sum(rate(redis_keyspace_hits_total[5m]))
+            /
+            (sum(rate(redis_keyspace_hits_total[5m])) + sum(rate(redis_keyspace_misses_total[5m])))
+          ) < 0.5
+        for: 15m
+        labels:
+          severity: warning
+          priority: P2
+        annotations:
+          summary: "Redis keyspace hit ratio low"
+          description: "redis_exporter: hits / (hits+misses) < 50% over 15m"

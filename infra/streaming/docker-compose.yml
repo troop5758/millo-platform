@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  # ── RTMP ingest + HLS packager ──────────────────────────────────────────────
+  nginx-rtmp:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx-rtmp
+    container_name: millo-nginx-rtmp
+    restart: unless-stopped
+    ports:
+      - "1935:1935"   # RTMP ingest (OBS/streaming clients)
+      - "8080:80"     # HLS playback HTTP
+    volumes:
+      - hls_segments:/tmp/hls
+      - recordings:/recordings
+    environment:
+      - HLS_HOST=${HLS_HOST:-hls.milloapp.com}
+      - API_BASE=${API_BASE:-http://api:3000}
+      - INGEST_WEBHOOK_SECRET=${INGEST_WEBHOOK_SECRET:-millo_ingest}
+    networks:
+      - millo
+
+  # ── FFmpeg transcoder (multi-bitrate ladder) ─────────────────────────────────
+  ffmpeg-worker:
+    image: jrottenberg/ffmpeg:4.4-ubuntu
+    container_name: millo-ffmpeg
+    restart: unless-stopped
+    depends_on:
+      - nginx-rtmp
+    volumes:
+      - hls_segments:/tmp/hls
+      - recordings:/recordings
+      - ./scripts/transcode.sh:/transcode.sh:ro
+    entrypoint: ["/bin/sh", "/transcode.sh"]
+    networks:
+      - millo
+
+volumes:
+  hls_segments:
+  recordings:
+
+networks:
+  millo:
+    external: true

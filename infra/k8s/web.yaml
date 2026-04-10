@@ -1,0 +1,72 @@
+# Millo web (landing + SPA) — static dist via nginx in image millo/web (see packages/web/Dockerfile).
+# Build image from repo root: docker build -f packages/web/Dockerfile -t millo/web:latest \
+#   --build-arg VITE_API_URL=https://api.milloapp.com .
+# Apply with API ingress: kubectl apply -f namespace.yaml -f web.yaml -f api.yaml
+# Without this Deployment, Ingress rules for milloapp.com → millo-web will 502.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: millo-web
+  namespace: millo
+  labels:
+    app: millo-web
+    app.kubernetes.io/name: millo-web
+    app.kubernetes.io/component: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: millo-web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: millo-web
+        app.kubernetes.io/name: millo-web
+    spec:
+      containers:
+        - name: web
+          image: millo/web:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 2
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "50m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: millo-web
+  namespace: millo
+  labels:
+    app: millo-web
+spec:
+  type: ClusterIP
+  selector:
+    app: millo-web
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

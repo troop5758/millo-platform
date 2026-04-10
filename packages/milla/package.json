@@ -1,0 +1,14 @@
+{
+  "name": "@millo/milla",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Millo Virtual Streamer (MILLA) — AI policy engine, voice hooks, gift reactions",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test src/*.test.js"
+  },
+  "engines": { "node": ">=18.0.0" },
+  "dependencies": {
+    "@millo/database": "3.0.0"
+  }
+}

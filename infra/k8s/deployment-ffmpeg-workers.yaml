@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ffmpeg-workers
+  namespace: millo
+  labels:
+    app: ffmpeg-workers
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: ffmpeg-workers
+  template:
+    metadata:
+      labels:
+        app: ffmpeg-workers
+    spec:
+      containers:
+        - name: ffmpeg
+          image: millo/ffmpeg-kafka-worker:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: millo-config
+            - secretRef:
+                name: millo-secrets
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: KAFKA_ENABLED
+              value: "true"
+            # Strimzi service naming convention: <Kafka name>-kafka-bootstrap
+            - name: KAFKA_BROKERS
+              value: "millo-kafka-kafka-bootstrap:9092"
+            - name: FFMPEG_TRANSCODE_ENABLED
+              value: "true"
+            - name: KAFKA_FFMPEG_CONSUMER_GROUP_ID
+              value: "millo-ffmpeg-transcoder"
+            - name: FFMPEG_WORK_DIR
+              value: "/tmp/millo-transcode"
+            - name: FFMPEG_MULTIBITRATE_HLS
+              value: "true"
+          volumeMounts:
+            - name: work
+              mountPath: /tmp/millo-transcode
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "2000m"
+          # No ports: this is a background Kafka consumer.
+      volumes:
+        - name: work
+          emptyDir: {}
+

@@ -1,0 +1,61 @@
+# Requires ingress-nginx or AWS ALB Ingress Controller
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: millo-ingress
+  namespace: millo
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+spec:
+  tls:
+    - hosts:
+        - milloapp.com
+        - www.milloapp.com
+        - api.milloapp.com
+        - cdn.milloapp.com
+        - hls.milloapp.com
+      secretName: millo-tls
+  rules:
+    - host: milloapp.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: millo-web
+                port:
+                  number: 80
+    - host: www.milloapp.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: millo-web
+                port:
+                  number: 80
+    - host: api.milloapp.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: millo-api
+                port:
+                  number: 80
+    - host: hls.milloapp.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: millo-streaming
+                port:
+                  number: 80

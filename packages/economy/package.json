@@ -1,0 +1,18 @@
+{
+  "name": "@millo/economy",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Millo Economy — coins, gifts, auctions, tickets, revenue splits, ledger",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test src/*.test.js"
+  },
+  "engines": { "node": ">=18.0.0" },
+  "dependencies": {
+    "@millo/database": "3.0.0",
+    "ioredis": "^5.3.0"
+  },
+  "optionalDependencies": {
+    "pg": "^8.13.3"
+  }
+}

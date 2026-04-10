@@ -1,0 +1,23 @@
+{
+  "env": "production",
+  "features": {
+    "liveStreaming": true,
+    "liveGoLive": true,
+    "liveViewerCount": true,
+    "liveChat": true,
+    "liveGifts": true,
+    "liveModerators": true,
+    "liveCohost": false,
+    "ads": true,
+    "aiRanking": true,
+    "creatorDirectory": true,
+    "liveFilters": false,
+    "smartTV": false,
+    "milla": false
+  },
+  "guards": {
+    "requireStripe": true,
+    "requireOAuth": true,
+    "requireEmailService": true
+  }
+}

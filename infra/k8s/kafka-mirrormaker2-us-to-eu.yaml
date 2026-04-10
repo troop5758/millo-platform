@@ -1,0 +1,41 @@
+# Strimzi KafkaMirrorMaker2 — US -> EU (topics + consumer groups)
+# Phase 4 / Part 4 — Cross-Region Replication
+#
+# Deploy this in the EU Kubernetes cluster.
+# Update `bootstrapServers` fields to point at the US/EU Strimzi bootstrap services.
+
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaMirrorMaker2
+metadata:
+  name: mm2-us-to-eu
+  namespace: millo
+spec:
+  version: 4.2.0
+  replicas: 1
+  target:
+    alias: eu
+    bootstrapServers: eu-kafka-bootstrap:9092
+    groupId: mm2-us-to-eu-group
+    configStorageTopic: mm2-us-to-eu-config
+    offsetStorageTopic: mm2-us-to-eu-offset
+    statusStorageTopic: mm2-us-to-eu-status
+  mirrors:
+    - source:
+        alias: us
+        bootstrapServers: us-kafka-bootstrap:9092
+      topicsPattern: ".*"
+      groupsPattern: ".*"
+      sourceConnector:
+        tasksMax: 1
+        config:
+          replication.factor: -1
+          offset-syncs.topic.replication.factor: -1
+          sync.topic.acls.enabled: "false"
+          refresh.topics.interval.seconds: 600
+      checkpointConnector:
+        tasksMax: 1
+        config:
+          checkpoints.topic.replication.factor: -1
+          sync.group.offsets.enabled: "false"
+          refresh.groups.interval.seconds: 600
+

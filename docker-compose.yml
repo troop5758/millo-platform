@@ -1,0 +1,194 @@
+version: '3.9'
+
+# ── Millo 3.0 — Full Stack Docker Compose ──────────────────────────────────────
+# Starts: MongoDB, Redis, Millo API, Millo Web (preview build), nginx-rtmp
+# Optional: Prometheus (9090), Grafana (3001) — Prometheus uses infra/monitoring/prometheus.docker-stack.yml (scrapes api:3000)
+# Usage:
+#   1. Copy .env.example → .env and fill in secrets
+#   2. docker-compose up --build
+#   3. Open http://localhost:5173 (web) or http://localhost:3000/health (api)
+#   4. Monitoring: docker compose up -d prometheus grafana → Grafana http://localhost:3001
+# ─────────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── MongoDB ────────────────────────────────────────────────────────────────────
+  mongo:
+    image: mongo:7
+    container_name: millo-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-millo}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-changeme}
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - millo
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Redis (caching, sessions) ──────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: millo-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --save 60 1 --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    networks:
+      - millo
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # ── Millo API (Fastify) ────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: packages/api/Dockerfile
+    container_name: millo-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      NODE_ENV:              ${NODE_ENV:-production}
+      PORT:                  3000
+      HOST:                  0.0.0.0
+      MONGODB_URI:           mongodb://${MONGO_INITDB_ROOT_USERNAME:-millo}:${MONGO_INITDB_ROOT_PASSWORD:-changeme}@mongo:27017/millo?authSource=admin
+      REDIS_URL:             redis://redis:6379
+      JWT_SECRET:            ${JWT_SECRET:?JWT_SECRET is required}
+      STRIPE_SECRET_KEY:     ${STRIPE_SECRET_KEY:-}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+      SENDGRID_API_KEY:      ${SENDGRID_API_KEY:-}
+      EMAIL_FROM:            ${EMAIL_FROM:-noreply@milloapp.com}
+      EMAIL_PROVIDER:        ${EMAIL_PROVIDER:-console}
+      SMTP_HOST:             ${SMTP_HOST:-}
+      SMTP_PORT:             ${SMTP_PORT:-587}
+      SMTP_USER:             ${SMTP_USER:-}
+      SMTP_PASS:             ${SMTP_PASS:-}
+      OAUTH_GOOGLE_ID:       ${OAUTH_GOOGLE_ID:-}
+      OAUTH_GOOGLE_SECRET:   ${OAUTH_GOOGLE_SECRET:-}
+      OAUTH_FACEBOOK_ID:     ${OAUTH_FACEBOOK_ID:-}
+      OAUTH_FACEBOOK_SECRET: ${OAUTH_FACEBOOK_SECRET:-}
+      EXPO_ACCESS_TOKEN:     ${EXPO_ACCESS_TOKEN:-}
+      FIREBASE_SERVER_KEY:   ${FIREBASE_SERVER_KEY:-}
+      RTMP_INGEST_HOST:      millo-nginx-rtmp
+      HLS_HOST:              localhost:8080
+      INGEST_WEBHOOK_SECRET: ${INGEST_WEBHOOK_SECRET:-millo_ingest}
+      FRONTEND_URL:          ${FRONTEND_URL:-http://localhost:5173}
+      APP_VERSION:           ${APP_VERSION:-3.0.0}
+      GIT_COMMIT:            ${GIT_COMMIT:-local}
+      BUILD_DATE:            ${BUILD_DATE:-}
+      SENTRY_DSN:            ${SENTRY_DSN:-}
+    networks:
+      - millo
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  # ── Millo Web (Vite preview build) ─────────────────────────────────────────────
+  web:
+    build:
+      context: .
+      dockerfile: packages/web/Dockerfile
+    container_name: millo-web
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+    environment:
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:3000}
+    networks:
+      - millo
+
+  # ── Prometheus (metrics scraping + alerting) ──────────────────────────────────
+  prometheus:
+    image: prom/prometheus:v2.47.0
+    container_name: millo-prometheus
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./infra/monitoring/prometheus.docker-stack.yml:/etc/prometheus/prometheus.yml:ro
+      - ./infra/monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.enable-lifecycle'
+    depends_on:
+      - api
+    networks:
+      - millo
+
+  # ── Grafana (dashboards + visualization) ──────────────────────────────────────
+  grafana:
+    image: grafana/grafana:10.2.0
+    container_name: millo-grafana
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER:     ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+      GF_USERS_ALLOW_SIGN_UP:     "false"
+      GF_SERVER_ROOT_URL:         ${GRAFANA_ROOT_URL:-http://localhost:3001}
+      GF_INSTALL_PLUGINS:         grafana-piechart-panel
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./infra/monitoring/grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
+      - ./infra/monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+    depends_on:
+      - prometheus
+    networks:
+      - millo
+
+  # ── nginx-RTMP (streaming ingest + HLS delivery) ──────────────────────────────
+  nginx-rtmp:
+    build:
+      context: ./infra/streaming
+      dockerfile: Dockerfile.nginx-rtmp
+    container_name: millo-nginx-rtmp
+    restart: unless-stopped
+    ports:
+      - "1935:1935"   # RTMP ingest
+      - "8080:80"     # HLS playback
+    volumes:
+      - hls_segments:/tmp/hls
+      - recordings:/recordings
+    environment:
+      API_BASE:              http://api:3000
+      INGEST_WEBHOOK_SECRET: ${INGEST_WEBHOOK_SECRET:-millo_ingest}
+    networks:
+      - millo
+
+volumes:
+  mongo_data:
+  redis_data:
+  hls_segments:
+  recordings:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  millo:
+    driver: bridge

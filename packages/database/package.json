@@ -1,0 +1,12 @@
+{
+  "name": "@millo/database",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Millo Database — MongoDB + PostgreSQL (ledger)",
+  "main": "src/index.js",
+  "engines": { "node": ">=18.0.0" },
+  "dependencies": {
+    "@millo/shared": "3.0.0",
+    "mongoose": "^8.0.0"
+  }
+}

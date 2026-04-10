@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: millo
+  labels:
+    app.kubernetes.io/name: millo
+    app.kubernetes.io/part-of: millo-platform

@@ -1,0 +1,125 @@
+# Strimzi KafkaTopic — discovery / recommendation event stream
+# Apply after Kafka cluster (e.g. kafka-strimzi.yaml). Namespace must match cluster.
+# Each resource uses metadata.name as K8s ID; Kafka topic name = spec.topicName (dots allowed).
+# Tune partitions/replicas for your cluster (replicas <= broker count).
+# https://milloapp.com
+
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: feed-impression
+  namespace: millo
+  labels:
+    strimzi.io/cluster: millo-kafka
+spec:
+  topicName: feed.impression
+  partitions: 6
+  replicas: 3
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: feed-watch
+  namespace: millo
+  labels:
+    strimzi.io/cluster: millo-kafka
+spec:
+  topicName: feed.watch
+  partitions: 6
+  replicas: 3
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: feed-engagement
+  namespace: millo
+  labels:
+    strimzi.io/cluster: millo-kafka
+spec:
+  topicName: feed.engagement
+  partitions: 6
+  replicas: 3
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: feed-negative
+  namespace: millo
+  labels:
+    strimzi.io/cluster: millo-kafka
+spec:
+  topicName: feed.negative
+  partitions: 6
+  replicas: 3
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: feature-user-updates
+  namespace: millo
+  labels:
+    strimzi.io/cluster: millo-kafka
+spec:
+  topicName: feature.user.updates
+  partitions: 3
+  replicas: 3
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: feature-content-updates
+  namespace: millo
+  labels:
+    strimzi.io/cluster: millo-kafka
+spec:
+  topicName: feature.content.updates
+  partitions: 3
+  replicas: 3
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: rank-train-samples
+  namespace: millo
+  labels:
+    strimzi.io/cluster: millo-kafka
+spec:
+  topicName: rank.train.samples
+  partitions: 6
+  replicas: 3
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: rank-predictions
+  namespace: millo
+  labels:
+    strimzi.io/cluster: millo-kafka
+spec:
+  topicName: rank.predictions
+  partitions: 6
+  replicas: 3
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: creator-trust-updates
+  namespace: millo
+  labels:
+    strimzi.io/cluster: millo-kafka
+spec:
+  topicName: creator.trust.updates
+  partitions: 3
+  replicas: 3
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: content-moderation-updates
+  namespace: millo
+  labels:
+    strimzi.io/cluster: millo-kafka
+spec:
+  topicName: content.moderation.updates
+  partitions: 3
+  replicas: 3

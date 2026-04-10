@@ -1,0 +1,45 @@
+# Prometheus — Millo API metrics when the API runs on the host (not in Docker).
+# Use with: `cd infra/monitoring && docker compose up` (see docker-compose.yml there).
+# Full stack at repo root: `prometheus.docker-stack.yml` scrapes `api:3000` on the `millo` network.
+# https://milloapp.com
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+        # Add Alertmanager for production: - targets: ['alertmanager:9093']
+
+rule_files:
+  - /etc/prometheus/alerts.yml
+
+scrape_configs:
+  # When running via docker compose: API typically on host. Use host.docker.internal (Docker Desktop)
+  # or replace targets with your API service DNS (e.g. api:3000 on the same Docker network).
+  - job_name: 'millo-api'
+    static_configs:
+      - targets: ['host.docker.internal:3000']
+    metrics_path: /metrics
+    scrape_interval: 10s
+
+  # Optional: oliver006/redis_exporter on :9121 — redis_keyspace_hits_total / redis_keyspace_misses_total
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['host.docker.internal:9121']
+    scrape_interval: 15s
+    # Comment out or remove targets if exporter not running (Prometheus will show target down).
+
+  # Optional: Kafka lag — Strimzi Kafka Exporter, danielqsj/kafka-exporter, or similar on :9308
+  - job_name: 'kafka'
+    static_configs:
+      - targets: ['host.docker.internal:9308']
+    scrape_interval: 15s
+
+  # Optional: MongoDB — e.g. percona/mongodb_exporter (alerts: MongoDBExporterDown expects job_name: mongodb)
+  # - job_name: 'mongodb'
+  #   static_configs:
+  #     - targets: ['host.docker.internal:9216']
+  #   scrape_interval: 30s

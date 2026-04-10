@@ -1,0 +1,15 @@
+{
+  "name": "@millo/dm-monetization",
+  "version": "3.0.0",
+  "private": true,
+  "description": "DM Monetization — per-minute billing, free buffer, offline queue, creator approval",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test src/*.test.js"
+  },
+  "engines": { "node": ">=18.0.0" },
+  "dependencies": {
+    "@millo/database": "3.0.0",
+    "@millo/economy": "3.0.0"
+  }
+}

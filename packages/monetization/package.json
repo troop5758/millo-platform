@@ -1,0 +1,13 @@
+{
+  "name": "@millo/monetization",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Creator Monetization Super System",
+  "main": "src/index.js",
+  "engines": { "node": ">=18.0.0" },
+  "dependencies": {
+    "@millo/database": "3.0.0",
+    "@millo/economy": "3.0.0",
+    "@millo/ppv": "3.0.0"
+  }
+}

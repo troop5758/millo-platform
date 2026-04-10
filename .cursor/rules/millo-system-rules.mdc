@@ -1,0 +1,36 @@
+---
+description: Millo platform absolute system rules (non-negotiable)
+alwaysApply: true
+---
+
+# Millo Absolute System Rules (Non-Negotiable)
+
+Cursor MUST follow these rules for all work on this project.
+
+## Execution & Structure
+- **Generate files ONLY in the order specified** — Do not reorder or generate out of sequence.
+- **NEVER skip phases** — Complete every phase.
+- **NEVER merge phases** — Keep phases separate and distinct.
+- **NEVER refactor unless explicitly told** — No proactive refactoring.
+
+## Feature-to-Phase Matrix (Strict)
+- **Follow the Millo Feature-to-Phase Matrix strictly** — Each phase doc (docs/phase-*.md) defines what that phase owns.
+- **Implement only the features owned by this phase** — Do not add scope beyond the phase's "Owns" list.
+- **Do NOT implement features assigned to future phases** — If a feature is owned by a later phase, leave it out until that phase.
+- **Do NOT refactor previous phases** — Do not change implementation or structure of earlier phases; only add or adjust within the current phase.
+
+## Services & Scope
+- **NEVER invent undocumented services** — Use only services that are documented in the project.
+
+## Audit & Compliance
+- **Log every financial mutation** — All money-related changes must write to an audit log.
+- **Log every admin override** — All admin overrides must write to an audit log.
+
+## AI & Security
+- **Keep AI shadow-mode unless enabled** — AI features must be off by default; enable only when explicitly configured.
+- **Ensure production-ready security posture** — Apply secure defaults and practices.
+
+## Deployment & Domain
+- **Ensure the platform runs end-to-end** — Full E2E flow must work.
+- **Ensure full deployability via script** — Deployment must be script-driven and reproducible.
+- **Bind everything to https://milloapp.com** — Production URLs and config must use this domain.

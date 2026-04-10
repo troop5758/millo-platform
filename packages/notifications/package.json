@@ -1,0 +1,21 @@
+{
+  "name": "@millo/notifications",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Emails + branding + push + in-app notifications. Logo embedded, dark/light templates.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test src/*.test.js"
+  },
+  "engines": { "node": ">=18.0.0" },
+  "dependencies": {
+    "@millo/database": "3.0.0",
+    "@sendgrid/mail": "^8.1.4",
+    "nodemailer": "^6.9.13"
+  },
+  "optionalDependencies": {
+    "nodemailer-sendgrid": "^1.0.3",
+    "resend": "^4.0.0",
+    "@aws-sdk/client-ses": "^3.0.0"
+  }
+}

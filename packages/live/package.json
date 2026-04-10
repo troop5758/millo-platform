@@ -1,0 +1,11 @@
+{
+  "name": "@millo/live",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Millo Live Streaming Core",
+  "main": "src/index.js",
+  "engines": { "node": ">=18.0.0" },
+  "dependencies": {
+    "@millo/database": "3.0.0"
+  }
+}

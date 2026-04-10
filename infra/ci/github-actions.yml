@@ -1,0 +1,64 @@
+# Millo — GitHub Actions: build on push to main, deploy over SSH.
+#
+# GitHub only loads workflows from .github/workflows/*.yml. To enable this pipeline:
+#   cp infra/ci/github-actions.yml .github/workflows/deploy.yml
+# Or merge the `deploy-ssh` job into .github/workflows/ci-cd.yml.
+#
+# Secrets (repo → Settings → Secrets):
+#   SERVER_IP   — host/IP of the production server
+#   SSH_KEY     — private key for SSH (pem), same format as DEPLOY_SSH_KEY in ci-cd.yml
+# Optional repository variable:
+#   DEPLOY_DIR  — if set, used as server repo path (otherwise /opt/millo in the script below).
+#
+# Server layout: clone Millo at DEPLOY_DIR, install Node 20 + pm2, nginx per infra/nginx/.
+# https://milloapp.com
+
+name: Deploy
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      NODE_VERSION: '20'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Focused go-live gate
+        run: npm run go-live-gate
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          DEPLOY_DIR: ${{ vars.DEPLOY_DIR }}
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          # Omit secret SSH_USER to use root (matches typical first-server setup).
+          username: ${{ secrets.SSH_USER == '' && 'root' || secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          envs: DEPLOY_DIR
+          script_stop: true
+          script: |
+            set -e
+            cd "${DEPLOY_DIR:-/opt/millo}"
+            git pull origin main
+            bash scripts/deploy.sh

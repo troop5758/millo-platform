@@ -1,0 +1,14 @@
+{
+  "name": "@millo/level-trust",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Millo Level & Trust Engine",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test src/constants.test.js src/gate.test.js"
+  },
+  "engines": { "node": ">=18.0.0" },
+  "dependencies": {
+    "@millo/database": "3.0.0"
+  }
+}

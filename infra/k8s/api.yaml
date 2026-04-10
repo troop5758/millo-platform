@@ -1,0 +1,200 @@
+# =============================================================================
+# Millo API — Kubernetes-ready (production: https://milloapp.com)
+#
+# Includes:
+#   • **Auto-scaling** — HorizontalPodAutoscaler (CPU); tune metrics / KEDA in prod.
+#   • **Multi-region** — topology spread across zones; deploy same manifest per cluster
+#     with external geo load balancing (see infra/multi-region-geo-routing.md,
+#     infra/global-load-balancing.md). Optional: set cluster label via Kustomize overlay.
+#   • **CDN delivery** — put global CDN (e.g. Cloudflare) in front of api.milloapp.com;
+#     see infra/cloudflare/cdn-rules.md. Ingress below terminates TLS at edge ingress;
+#     for “orange cloud” proxy, use provider annotations (example Cloudflare comment block).
+#
+# Conflicts: `deployment-api.yaml` uses the same Deployment/Service/HPA names —
+# apply **either** this file or that pair + `hpa-api.yaml`, not both.
+# =============================================================================
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: millo-api
+  namespace: millo
+  labels:
+    app: millo-api
+    app.kubernetes.io/name: millo-api
+    app.kubernetes.io/component: api
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: millo-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: millo-api
+        app.kubernetes.io/name: millo-api
+    spec:
+      # Multi-AZ / multi-region friendly (one cluster); repeat Deployment in each region cluster.
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: millo-api
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 40
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: millo-api
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - name: api
+          image: millo/api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: millo-config
+                optional: true
+            - secretRef:
+                name: millo-secrets
+                optional: true
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "3000"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "2000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: millo-api
+  namespace: millo
+  labels:
+    app: millo-api
+spec:
+  type: ClusterIP
+  selector:
+    app: millo-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: millo-api-hpa
+  namespace: millo
+  labels:
+    app: millo-api
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: millo-api
+  minReplicas: 5
+  maxReplicas: 50
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 65
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+    scaleUp:
+      stabilizationWindowSeconds: 0
+---
+# CDN: terminate at ingress; global CDN (Cloudflare/Fastly) proxies to LB → this Ingress.
+# For Cloudflare “proxied” orange cloud, set origin to your ingress LB; do not cache /api/*. See infra/cloudflare/cdn-rules.md
+# Apex + www route to Service millo-web — apply infra/k8s/web.yaml and image millo/web:latest or HTTPS for milloapp.com will 502.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: millo-api-ingress
+  namespace: millo
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    # API responses typically non-cacheable at edge; CDN still accelerates TLS + DDoS.
+    nginx.ingress.kubernetes.io/proxy-buffering: "on"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - milloapp.com
+        - www.milloapp.com
+        - api.milloapp.com
+      secretName: millo-tls-api
+  rules:
+    - host: milloapp.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: millo-web
+                port:
+                  number: 80
+    - host: www.milloapp.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: millo-web
+                port:
+                  number: 80
+    - host: api.milloapp.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: millo-api
+                port:
+                  number: 80

@@ -1,0 +1,104 @@
+# =============================================================================
+# Phase 4 — Global architecture (reference)
+#   Users (global) → CDN + Edge (Cloudflare / Fastly) → Geo DNS load balancer
+#   → Kubernetes (multi-region) → Microservices (API, Web, Workers)
+#   → Kafka (multi-cluster) → Replicated databases → S3 (multi-region)
+# Production: https://milloapp.com
+#
+# Kubernetes (core): auto-scaling, self-healing, multi-region deployments.
+#
+# Do not apply together with deployment-api.yaml + hpa-api.yaml (same names).
+# Either use this all-in-one file, deployment-api.yaml + hpa-api.yaml, or infra/k8s/api.yaml (5 replicas + HPA + ingress).
+#
+# Port 5000 matches Phase 4 base spec; API honors process.env.PORT (packages/api/src/config.js).
+# Stock image with no PORT uses 3000 — set PORT below or switch ports to 3000 if needed.
+# =============================================================================
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: millo-api
+  namespace: millo
+  labels:
+    app: millo-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: millo-api
+  template:
+    metadata:
+      labels:
+        app: millo-api
+    spec:
+      containers:
+        - name: api
+          image: millo/api:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PORT
+              value: "5000"
+          envFrom:
+            - configMapRef:
+                name: millo-config
+            - secretRef:
+                name: millo-secrets
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: millo-api
+  namespace: millo
+  labels:
+    app: millo-api
+spec:
+  type: ClusterIP
+  selector:
+    app: millo-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: 5000
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: millo-api-hpa
+  namespace: millo
+  labels:
+    app: millo-api
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: millo-api
+  minReplicas: 3
+  maxReplicas: 20
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70

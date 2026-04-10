@@ -1,0 +1,14 @@
+# Grafana — load Millo dashboards from this directory (JSON files).
+# https://milloapp.com
+
+apiVersion: 1
+
+providers:
+  - name: Millo
+    orgId: 1
+    folder: Millo
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /etc/grafana/provisioning/dashboards

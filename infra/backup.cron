@@ -1,0 +1,6 @@
+# Millo backup cron. https://milloapp.com
+# Install: sudo cp infra/backup.cron /etc/cron.d/millo-backup (then chmod 644)
+# Configure MONGO_URI and BACKUP_DIR in infra/backup-cron.sh or .env before enabling.
+
+# Daily backup at 02:00 (MongoDB dump; optionally Redis and app data)
+0 2 * * * root /bin/bash /var/www/millo/infra/backup-cron.sh >> /var/log/millo-backup.log 2>&1

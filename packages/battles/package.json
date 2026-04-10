@@ -1,0 +1,8 @@
+{
+  "name": "@millo/battles",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Millo Battles",
+  "main": "index.js",
+  "engines": { "node": ">=18.0.0" }
+}

@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: janus
+  namespace: millo
+  labels:
+    app: janus
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: janus
+  template:
+    metadata:
+      labels:
+        app: janus
+    spec:
+      containers:
+        - name: janus
+          image: millo/janus:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8088
+              protocol: TCP
+            - name: https
+              containerPort: 8089
+              protocol: TCP
+            - name: ws
+              containerPort: 8188
+              protocol: TCP
+            - name: wss
+              containerPort: 8189
+              protocol: TCP
+            # Janus RTP / media transport (UDP). Must be handled by a UDP-capable LB.
+            - name: rtp
+              containerPort: 10000
+              protocol: UDP
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "1000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: janus
+  namespace: millo
+  labels:
+    app: janus
+  annotations:
+    # UDP-aware load balancing (works on AWS; other clouds may differ).
+    # If your LB implementation differs, replace annotations accordingly.
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb-ip
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  sessionAffinity: ClientIP
+  selector:
+    app: janus
+  ports:
+    - name: http
+      port: 8088
+      targetPort: 8088
+      protocol: TCP
+    - name: https
+      port: 8089
+      targetPort: 8089
+      protocol: TCP
+    - name: ws
+      port: 8188
+      targetPort: 8188
+      protocol: TCP
+    - name: wss
+      port: 8189
+      targetPort: 8189
+      protocol: TCP
+    - name: rtp
+      port: 10000
+      targetPort: 10000
+      protocol: UDP
+

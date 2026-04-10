@@ -1,0 +1,28 @@
+{
+  "name": "@millo/workers",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Millo Workers — BullMQ (Redis)",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "start:moderation": "node moderation.worker.js",
+    "start:features": "node features.worker.js"
+  },
+  "engines": { "node": ">=18.0.0" },
+  "dependencies": {
+    "@millo/dashboards": "3.0.0",
+    "@millo/database": "3.0.0",
+    "@millo/economy": "3.0.0",
+    "@millo/billing": "3.0.0",
+    "@millo/level-trust": "3.0.0",
+    "@millo/live": "3.0.0",
+    "@millo/notifications": "3.0.0",
+    "bullmq": "^5.0.0",
+    "ioredis": "^5.3.0"
+  },
+  "optionalDependencies": {
+    "@sentry/node": "^8.0.0",
+    "kafkajs": "^2.2.4"
+  }
+}

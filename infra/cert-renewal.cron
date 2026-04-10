@@ -1,0 +1,3 @@
+# Let's Encrypt automatic renewal. Install: crontab -e or place in /etc/cron.d/millo-cert-renewal
+# Run twice daily; certbot renew only acts when cert is near expiry.
+0 3,15 * * * root /bin/bash /var/www/millo/infra/cert-renewal.sh >> /var/log/millo-cert-renewal.log 2>&1

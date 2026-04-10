@@ -1,0 +1,19 @@
+# Millo 3.0 — Development (Windows npm install fix)
+# Run `npm install` inside Linux to avoid symlink/EISDIR issues on Windows.
+#
+# Build:  docker build -f Dockerfile.dev -t millo-dev .
+# Run:   docker run -it -p 3001:3001 millo-dev
+#
+# Optional: mount source for live reload (PowerShell): -v "${PWD}:/app"
+# Alternative: Use WSL2 for native Linux dev.
+FROM node:20
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 3001
+CMD ["npm", "run", "dev"]

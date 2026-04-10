@@ -1,0 +1,42 @@
+# Millo — Nginx reverse proxy (Ubuntu)
+# Production URLs: https://milloapp.com (web) + https://api.milloapp.com (API)
+# Generate site config:
+#   export MILLO_DOMAIN=milloapp.com MILLO_API_HOST=api.milloapp.com MILLO_API_PORT=3000
+#   envsubst '${MILLO_DOMAIN} ${MILLO_API_HOST} ${MILLO_API_PORT}' < milloapp.com.conf.template > /etc/nginx/sites-available/milloapp.com
+# https://milloapp.com
+
+# Web — static (deploy: sudo bash infra/deploy-web.sh from repo)
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ${MILLO_DOMAIN} www.${MILLO_DOMAIN};
+
+    root /var/www/millo/web;
+    index index.html;
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+    access_log /var/log/nginx/millo-web.access.log;
+    error_log  /var/log/nginx/millo-web.error.log;
+}
+
+# API + WebSocket — Fastify (PM2 on loopback)
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ${MILLO_API_HOST};
+
+    location / {
+        proxy_pass http://127.0.0.1:${MILLO_API_PORT};
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_read_timeout 86400;
+    }
+    access_log /var/log/nginx/millo-api.access.log;
+    error_log  /var/log/nginx/millo-api.error.log;
+}

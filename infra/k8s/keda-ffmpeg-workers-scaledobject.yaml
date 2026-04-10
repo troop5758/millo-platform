@@ -1,0 +1,23 @@
+# Queue-based autoscaling for the FFmpeg transcoder Kafka consumer.
+# Uses Kafka consumer lag (topic `video.uploaded`, group `millo-ffmpeg-transcoder`).
+#
+# Requires KEDA CRDs installed in the cluster.
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: ffmpeg-workers-kafka-lag
+  namespace: millo
+spec:
+  scaleTargetRef:
+    name: ffmpeg-workers
+  minReplicaCount: 10
+  maxReplicaCount: 20
+  triggers:
+    - type: kafka
+      metadata:
+        bootstrapServers: millo-kafka-kafka-bootstrap:9092
+        consumerGroup: millo-ffmpeg-transcoder
+        topic: video.uploaded
+        lagThreshold: "100"
+        offsetResetPolicy: latest
+

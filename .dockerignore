@@ -1,0 +1,13 @@
+node_modules
+.git
+.github
+*.log
+.env
+.env.*
+!.env.example
+infra
+docs
+packages/web
+packages/mobile
+*.md
+.DS_Store

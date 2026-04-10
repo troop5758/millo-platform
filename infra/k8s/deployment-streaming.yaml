@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: millo-nginx-rtmp
+  namespace: millo
+  labels:
+    app: millo-streaming
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: millo-streaming
+  template:
+    metadata:
+      labels:
+        app: millo-streaming
+    spec:
+      containers:
+        - name: nginx-rtmp
+          image: millo/nginx-rtmp:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 1935   # RTMP ingest
+            - containerPort: 80     # HLS playback
+          env:
+            - name: API_BASE
+              value: "http://millo-api:3000"
+            - name: INGEST_WEBHOOK_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: millo-secrets
+                  key: INGEST_WEBHOOK_SECRET
+          volumeMounts:
+            - name: hls
+              mountPath: /tmp/hls
+            - name: recordings
+              mountPath: /recordings
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "1000m"
+      volumes:
+        - name: hls
+          emptyDir: {}
+        - name: recordings
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: millo-streaming
+  namespace: millo
+spec:
+  selector:
+    app: millo-streaming
+  ports:
+    - name: rtmp
+      port: 1935
+      targetPort: 1935
+    - name: http
+      port: 80
+      targetPort: 80
+  type: LoadBalancer

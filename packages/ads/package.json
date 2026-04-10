@@ -1,0 +1,15 @@
+{
+  "name": "@millo/ads",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Millo Ads Engine — real-time auction, budget pacing, kill-switch, attribution",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test src/*.test.js"
+  },
+  "engines": { "node": ">=18.0.0" },
+  "dependencies": {
+    "@millo/ai-optimization": "3.0.0",
+    "@millo/database": "3.0.0"
+  }
+}
