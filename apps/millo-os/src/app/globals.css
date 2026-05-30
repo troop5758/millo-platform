@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  background: #0B0D0F;
+  color: #F5F7FA;
+  min-height: 100%;
+}
+
+body {
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.surface {
+  background: rgba(17,20,24,0.95);
+  border: 1px solid #252B33;
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+}
+
+.hero-gradient {
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(143,168,199,0.12),
+      transparent 50%
+    ),
+    #0B0D0F;
+}
+
+.editorial-title {
+  font-size: 64px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-weight: 600;
+}
+
+.editorial-subtitle {
+  color: #A7B0BA;
+  font-size: 18px;
+  line-height: 1.7;
+}

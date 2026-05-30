@@ -1,0 +1,65 @@
+#!/bin/bash
+
+set -e
+
+APP=/opt/millo/apps/millo-os
+SRC=$APP/src
+
+echo "======================================="
+echo "PHASE 5B - HOMEPAGE REDESIGN"
+echo "======================================="
+
+mkdir -p $SRC/components/home
+
+cat > $SRC/components/home/hero-banner.tsx <<'EOF'
+import CinematicHero from "@/components/hero/cinematic-hero"
+
+export default function HeroBanner() {
+  return (
+    <section className="mb-12">
+      <CinematicHero />
+    </section>
+  )
+}
+EOF
+
+cat > $SRC/app/page.tsx <<'EOF'
+export const dynamic = "force-dynamic"
+
+import AppShell from "@/components/layout/app-shell"
+
+import HeroBanner from "@/components/home/hero-banner"
+
+import LiveRail from "@/components/surfaces/live-rail"
+import CreatorRail from "@/components/surfaces/creator-rail"
+import MarketplaceRail from "@/components/surfaces/marketplace-rail"
+import RevenuePanel from "@/components/surfaces/revenue-panel"
+import TelemetryPanel from "@/components/surfaces/telemetry-panel"
+
+export default function HomePage() {
+  return (
+    <AppShell>
+      <div className="space-y-16">
+
+        <HeroBanner />
+
+        <LiveRail />
+
+        <CreatorRail />
+
+        <MarketplaceRail />
+
+        <RevenuePanel />
+
+        <TelemetryPanel />
+
+      </div>
+    </AppShell>
+  )
+}
+EOF
+
+echo
+echo "======================================="
+echo "PHASE 5B COMPLETE"
+echo "======================================="
