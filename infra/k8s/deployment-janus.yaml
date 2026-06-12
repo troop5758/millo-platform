@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: janus
-          image: millo/janus:latest
+          image: docker.io/library/millo-janus:latest
           imagePullPolicy: Always
           ports:
             - name: http

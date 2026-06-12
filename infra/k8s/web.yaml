@@ -1,5 +1,5 @@
 # Millo web (landing + SPA) — static dist via nginx in image millo/web (see packages/web/Dockerfile).
-# Build image from repo root: docker build -f packages/web/Dockerfile -t millo/web:latest \
+# Build image from repo root: docker build -f packages/web/Dockerfile -t docker.io/library/millo-frontend-production:latest \
 #   --build-arg VITE_API_URL=https://api.milloapp.com .
 # Apply with API ingress: kubectl apply -f namespace.yaml -f web.yaml -f api.yaml
 # Without this Deployment, Ingress rules for milloapp.com → millo-web will 502.
@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: millo/web:latest
+          image: docker.io/library/millo-frontend-production:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

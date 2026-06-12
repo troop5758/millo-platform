@@ -58,7 +58,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
       containers:
         - name: api
-          image: millo/api:latest
+          image: docker.io/library/millo-api-gateway:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
