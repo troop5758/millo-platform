@@ -1,0 +1,6 @@
+NAME              TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                                                                       AGE
+janus             LoadBalancer   10.43.39.80     <pending>     8088:30649/TCP,8089:31731/TCP,8188:31026/TCP,8189:31546/TCP,10000:30492/UDP   25h
+millo-api         ClusterIP      10.43.151.44    <none>        80/TCP                                                                        25h
+millo-streaming   LoadBalancer   10.43.184.134   <pending>     1935:30575/TCP,80:30107/TCP                                                   25h
+millo-web         ClusterIP      10.43.222.128   <none>        80/TCP                                                                        25h
+redis             ClusterIP      None            <none>        6379/TCP,16379/TCP                                                            25h

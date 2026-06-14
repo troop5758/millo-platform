@@ -109,5 +109,9 @@
     "go-live-gate": "node scripts/go-live-gate.js",
     "staging:smoke": "bash scripts/staging-smoke.sh",
     "staging:smoke:win": "powershell -ExecutionPolicy Bypass -File scripts/staging-smoke.ps1"
+  },
+  "dependencies": {
+    "@fastify/proxy-addr": "^5.1.0",
+    "fast-querystring": "^1.1.2"
   }
 }

@@ -1,0 +1,31 @@
+Janus commit: not-a-git-repo
+Compiled on:  Tue Feb 22 20:11:26 UTC 2022
+
+Logger plugins folder: /usr/lib/x86_64-linux-gnu/janus/loggers
+Loading logger plugin 'libjanus_jsonlog.so'...
+Adding 1 external loggers
+[WARN] JSON logger disabled
+---------------------------------------------------
+  Starting Meetecho Janus (WebRTC Server) v0.11.8
+---------------------------------------------------
+
+Checking command line arguments...
+Debug/log level is 4
+Debug/log timestamps are disabled
+Debug/log colors are enabled
+Using 10.42.0.122 as local IP...
+Token based authentication disabled
+Initializing recorder code
+Initializing ICE stuff (Full mode, ICE-TCP candidates disabled, half-trickle, IPv6 support disabled)
+STUN server to use: stun.l.google.com:19302
+  >> 74.125.250.129:19302 (IPv4)
+Testing STUN server: message is of 20 bytes
+  >> Our public address is 144.126.139.87
+TURN REST API backend: (disabled)
+Crypto: OpenSSL >= 1.1.0
+No cert/key specified, autogenerating some...
+Fingerprint of our certificate: B8:56:6B:7C:C9:69:C6:DC:AC:2D:24:0B:40:9A:04:37:BF:4A:37:1A:CC:8F:01:FF:BC:0E:B3:A6:CB:EA:05:2E
+Event handlers support disabled
+Plugins folder: /usr/lib/janus/plugins
+[35m[FATAL][0m [janus.c:main:5401] 	Couldn't access plugins folder...
+Joining Janus requests handler thread

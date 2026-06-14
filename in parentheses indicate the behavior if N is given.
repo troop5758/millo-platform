@@ -1,0 +1,58 @@
+[1mdiff --git a/packages/api/src/routes/disputes.js b/packages/api/src/routes/disputes.js[m
+[1mindex 143b7f7..26fb2bb 100644[m
+[1m--- a/packages/api/src/routes/disputes.js[m
+[1m+++ b/packages/api/src/routes/disputes.js[m
+[36m@@ -59,7 +59,10 @@[m [masync function resolveDisputeTransaction(transactionId) {[m
+ [m
+ async function disputesRoutes(app) {[m
+   /* ── Create dispute ── */[m
+[31m-  app.post(['/disputes', '/admin/disputes'], async (req, reply) => {[m
+[32m+[m[32m  app.post('/disputes', async (req, reply) => {[m
+[32m+[m[32m    });[m
+[32m+[m
+[32m+[m[32m    app.post('/admin/disputes', async (req, reply) => {[m
+     const user = await getRequestUser(req);[m
+     if (!user) return reply.status(401).send({ error: 'UNAUTHORIZED' });[m
+     const { transactionId, reason, userId, supportTicketId } = req.body ?? {};[m
+[36m@@ -138,7 +141,13 @@[m [masync function disputesRoutes(app) {[m
+   });[m
+ [m
+   /* ── List disputes ── */[m
+[31m-  app.get(['/disputes', '/admin/disputes', '/api/disputes'], async (req, reply) => {[m
+[32m+[m[32m  app.get('/disputes', async (req, reply) => {[m
+[32m+[m[32m    });[m
+[32m+[m
+[32m+[m[32m    app.get('/admin/disputes', async (req, reply) => {[m
+[32m+[m[32m    });[m
+[32m+[m
+[32m+[m[32m    app.get('/api/disputes', async (req, reply) => {[m
+     const user = await getRequestUser(req);[m
+     if (!user) return reply.status(401).send({ error: 'UNAUTHORIZED' });[m
+     const limit = Math.min(Number(req.query?.limit) || 50, 100);[m
+[36m@@ -155,7 +164,10 @@[m [masync function disputesRoutes(app) {[m
+   });[m
+ [m
+   /* ── Get dispute ── */[m
+[31m-  app.get(['/disputes/:id', '/admin/disputes/:id'], async (req, reply) => {[m
+[32m+[m[32m  app.get('/disputes/:id', async (req, reply) => {[m
+[32m+[m[32m    });[m
+[32m+[m
+[32m+[m[32m    app.get('/admin/disputes/:id', async (req, reply) => {[m
+     const user = await getRequestUser(req);[m
+     if (!user) return reply.status(401).send({ error: 'UNAUTHORIZED' });[m
+     if (!validateId(req.params.id, reply)) return;[m
+[36m@@ -167,7 +179,13 @@[m [masync function disputesRoutes(app) {[m
+   });[m
+ [m
+   /* ── Update dispute status (admin/support) ── */[m
+[31m-  app.patch(['/disputes/:id', '/admin/disputes/:id', '/api/disputes/:id'], async (req, reply) => {[m
+[32m+[m[32m  app.patch('/disputes/:id', async (req, reply) => {[m
+[32m+[m[32m    });[m
+[32m+[m
+[32m+[m[32m    app.patch('/admin/disputes/:id', async (req, reply) => {[m
+[32m+[m[32m    });[m
+[32m+[m
+[32m+[m[32m    app.patch('/api/disputes/:id', async (req, reply) => {[m
+     const user = await getRequestUser(req);[m
+     if (!user) return reply.status(401).send({ error: 'UNAUTHORIZED' });[m
+     if (!canManageDisputes(user)) return reply.status(403).send({ error: 'FORBIDDEN' });[m

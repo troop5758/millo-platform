@@ -1,0 +1,6 @@
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                                               SELECTOR
+janus              0/1     1            0           25h   janus        docker.io/library/millo-janus:latest                 app=janus
+millo-api          0/5     1            0           25h   api          docker.io/library/millo-api-gateway:latest           app=millo-api
+millo-nginx-rtmp   0/1     1            0           25h   nginx-rtmp   millo/nginx-rtmp:latest                              app=millo-streaming
+millo-web          1/1     1            1           25h   web          docker.io/library/millo-frontend-production:latest   app=millo-web
+millo-workers      0/1     1            0           25h   workers      docker.io/millo/workers:latest                       app=millo-workers

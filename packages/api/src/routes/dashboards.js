@@ -1719,7 +1719,7 @@ async function dashboardsRoutes(app) {
 
   /* ── AI shadow toggle (admin) — same setting as PATCH /admin/moderation/shadow-mode (key: ai_shadow_mode) ── */
   const AI_SHADOW_MODE_KEY = 'ai_shadow_mode';
-  app.get(['/dashboards/admin/ai-shadow-enabled', '/admin/ai/shadow-mode'], async (req, reply) => {
+  app.get('/dashboards/admin/ai-shadow-enabled', async (req, reply) => {
     const user = await getRequestUser(req);
     if (!user || user.role !== 'admin') return reply.status(403).send({ error: 'FORBIDDEN' });
     try {
@@ -1729,7 +1729,7 @@ async function dashboardsRoutes(app) {
     } catch (e) { throw e; }
   });
 
-  app.post(['/dashboards/admin/ai-shadow-enabled', '/admin/ai/shadow-mode'], async (req, reply) => {
+  app.post('/dashboards/admin/ai-shadow-enabled', async (req, reply) => {
     const user = await getRequestUser(req);
     if (!user || user.role !== 'admin') return reply.status(403).send({ error: 'FORBIDDEN' });
     const enabled = req.body?.enabled === true;

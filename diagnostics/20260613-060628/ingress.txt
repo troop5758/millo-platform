@@ -1,0 +1,3 @@
+NAME                CLASS    HOSTS                                                        ADDRESS   PORTS     AGE
+millo-api-ingress   nginx    milloapp.com,www.milloapp.com,api.milloapp.com                         80, 443   25h
+millo-ingress       <none>   milloapp.com,www.milloapp.com,api.milloapp.com + 1 more...             80, 443   25h

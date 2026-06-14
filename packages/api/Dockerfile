@@ -1,27 +1,15 @@
-FROM node:20-alpine AS base
+FROM node:20-alpine
+
 WORKDIR /app
 
-# Install workspace deps
-COPY package.json package-lock.json* ./
-COPY packages/api/package.json       ./packages/api/
-COPY packages/database/package.json  ./packages/database/
-COPY packages/notifications/package.json ./packages/notifications/
-COPY packages/billing/package.json   ./packages/billing/
-COPY packages/economy/package.json   ./packages/economy/
+COPY package*.json ./
+COPY packages ./packages
+COPY config ./config
 
-RUN npm ci --ignore-scripts --omit=dev
+RUN npm ci --ignore-scripts
 
-# Repo-root production profile (documentation vs deployment intent)
-COPY config/              ./config/
-
-# Copy source
-COPY packages/api/        ./packages/api/
-COPY packages/database/   ./packages/database/
-COPY packages/notifications/ ./packages/notifications/
-COPY packages/billing/    ./packages/billing/
-COPY packages/economy/    ./packages/economy/
-
-EXPOSE 3000
 ENV NODE_ENV=production
 
-CMD ["node", "packages/api/src/index.js"]
+EXPOSE 3000
+
+CMD ["node","packages/api/src/index.js"]

@@ -1,0 +1,180 @@
+LAST SEEN   TYPE      REASON                    OBJECT                                   MESSAGE
+8m6s        Normal    Scheduled                 pod/millo-api-7fbbfb8896-5zctp           Successfully assigned millo/millo-api-7fbbfb8896-5zctp to vmi2435915
+8m3s        Warning   FailedScheduling          pod/millo-api-7fbbfb8896-5bgsj           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+8m6s        Normal    Scheduled                 pod/janus-75d997d488-c26zl               Successfully assigned millo/janus-75d997d488-c26zl to vmi2435915
+6m29s       Normal    Scheduled                 pod/millo-workers-79f5ccb6cc-pvggx       Successfully assigned millo/millo-workers-79f5ccb6cc-pvggx to vmi2435915
+7m53s       Warning   FailedScheduling          pod/millo-workers-79f5ccb6cc-pvggx       0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+7m53s       Warning   FailedScheduling          pod/millo-workers-79f5ccb6cc-pvggx       0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+22s         Normal    Scheduled                 pod/millo-workers-6cddfdbd65-zsjsk       Successfully assigned millo/millo-workers-6cddfdbd65-zsjsk to vmi2435915
+8m3s        Normal    Scheduled                 pod/millo-workers-54ff4d94cc-p697p       Successfully assigned millo/millo-workers-54ff4d94cc-p697p to vmi2435915
+8m4s        Warning   FailedScheduling          pod/millo-workers-54ff4d94cc-p697p       0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+25m         Normal    Scheduled                 pod/millo-api-6c8f6c4f7d-rqjpf           Successfully assigned millo/millo-api-6c8f6c4f7d-rqjpf to vmi2435915
+18m         Warning   FailedScheduling          pod/janus-75d997d488-c26zl               0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+8m6s        Warning   FailedScheduling          pod/millo-api-6c8f6c4f7d-kvzkb           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+19s         Normal    Scheduled                 pod/millo-nginx-rtmp-c5984747c-zpqrr     Successfully assigned millo/millo-nginx-rtmp-c5984747c-zpqrr to vmi2435915
+21s         Warning   FailedScheduling          pod/millo-nginx-rtmp-c5984747c-zpqrr     0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+22s         Warning   FailedScheduling          pod/janus-7f87d48658-9gmj6               0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+21s         Normal    Scheduled                 pod/janus-7f87d48658-9gmj6               Successfully assigned millo/janus-7f87d48658-9gmj6 to vmi2435915
+21s         Warning   FailedScheduling          pod/millo-nginx-rtmp-c5984747c-zpqrr     0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+8m7s        Warning   FailedScheduling          pod/millo-api-6c8f6c4f7d-kvzkb           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+13m         Warning   FailedScheduling          pod/janus-75d997d488-c26zl               0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+8m6s        Normal    Scheduled                 pod/millo-nginx-rtmp-58f947ffb8-m6wm9    Successfully assigned millo/millo-nginx-rtmp-58f947ffb8-m6wm9 to vmi2435915
+12m         Warning   FailedScheduling          pod/millo-nginx-rtmp-58f947ffb8-m6wm9    0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+17m         Warning   FailedScheduling          pod/millo-nginx-rtmp-58f947ffb8-m6wm9    0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+8m6s        Normal    Scheduled                 pod/millo-api-7fbbfb8896-vln79           Successfully assigned millo/millo-api-7fbbfb8896-vln79 to vmi2435915
+8m6s        Warning   FailedScheduling          pod/millo-api-7fbbfb8896-vln79           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+8m7s        Warning   FailedScheduling          pod/millo-api-7fbbfb8896-vln79           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+8m7s        Warning   FailedScheduling          pod/millo-api-6c8f6c4f7d-wkv4m           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+8m6s        Warning   FailedScheduling          pod/millo-api-6c8f6c4f7d-wkv4m           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+8m6s        Normal    Scheduled                 pod/millo-api-6c8f6c4f7d-d9bz6           Successfully assigned millo/millo-api-6c8f6c4f7d-d9bz6 to vmi2435915
+22s         Warning   FailedScheduling          pod/millo-api-5555fc98f9-s29zt           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+21s         Warning   FailedScheduling          pod/millo-api-5555fc98f9-s29zt           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+8m6s        Normal    Scheduled                 pod/millo-api-6c8f6c4f7d-wkv4m           Successfully assigned millo/millo-api-6c8f6c4f7d-wkv4m to vmi2435915
+7m53s       Warning   FailedScheduling          pod/millo-api-66bdb6c667-h289m           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+6m29s       Warning   FailedScheduling          pod/millo-api-66bdb6c667-h289m           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+22s         Normal    Scheduled                 pod/millo-api-66bdb6c667-h289m           Successfully assigned millo/millo-api-66bdb6c667-h289m to vmi2435915
+8m7s        Warning   FailedScheduling          pod/millo-api-6c8f6c4f7d-d9bz6           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+8m6s        Warning   FailedScheduling          pod/millo-api-6c8f6c4f7d-d9bz6           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+8m6s        Normal    Scheduled                 pod/millo-api-6c8f6c4f7d-kvzkb           Successfully assigned millo/millo-api-6c8f6c4f7d-kvzkb to vmi2435915
+8m6s        Warning   FailedScheduling          pod/millo-api-7fbbfb8896-5zctp           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+8m7s        Warning   FailedScheduling          pod/millo-api-7fbbfb8896-5zctp           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+7m53s       Normal    Scheduled                 pod/millo-api-7fbbfb8896-5bgsj           Successfully assigned millo/millo-api-7fbbfb8896-5bgsj to vmi2435915
+29m         Warning   FailedScheduling          pod/millo-api-6c8f6c4f7d-rqjpf           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+8m6s        Warning   FailedScheduling          pod/millo-api-7fbbfb8896-5bgsj           0/1 nodes are available: 1 Insufficient memory. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+56m         Normal    Started                   pod/millo-api-6c8f6c4f7d-tgllp           Container started
+56m         Normal    Started                   pod/janus-7cbc665fcc-98prc               Container started
+56m         Normal    Started                   pod/millo-api-7fbbfb8896-hg9rf           Container started
+56m         Normal    Started                   pod/millo-api-7fbbfb8896-spw7s           Container started
+56m         Normal    Started                   pod/millo-nginx-rtmp-6f7bf6cc47-56n5l    Container started
+56m         Normal    Started                   pod/millo-workers-54ff4d94cc-hl7mh       Container started
+56m         Normal    Started                   pod/millo-api-7fbbfb8896-bsjhs           Container started
+56m         Normal    Started                   pod/millo-api-6c8f6c4f7d-bm84f           Container started
+51m         Normal    Created                   pod/janus-7cbc665fcc-98prc               Container created
+51m         Normal    Created                   pod/millo-api-6c8f6c4f7d-tgllp           Container created
+51m         Normal    Created                   pod/millo-api-7fbbfb8896-hg9rf           Container created
+51m         Normal    Created                   pod/millo-api-7fbbfb8896-bsjhs           Container created
+51m         Normal    Created                   pod/millo-nginx-rtmp-6f7bf6cc47-56n5l    Container created
+51m         Normal    Created                   pod/millo-api-7fbbfb8896-spw7s           Container created
+51m         Normal    Created                   pod/millo-workers-54ff4d94cc-hl7mh       Container created
+50m         Normal    Created                   pod/millo-api-6c8f6c4f7d-bm84f           Container created
+28m         Normal    Pulled                    pod/millo-nginx-rtmp-55fc4dd5cb-jvpj8    Container image "millo/nginx-rtmp:latest" already present on machine and can be accessed by the pod
+27m         Warning   BackOff                   pod/millo-nginx-rtmp-55fc4dd5cb-jvpj8    Back-off restarting failed container nginx-rtmp in pod millo-nginx-rtmp-55fc4dd5cb-jvpj8_millo(0a1cfbdd-97c9-4270-bce7-a642008c39eb)
+25m         Normal    ScalingReplicaSet         deployment/millo-nginx-rtmp              Scaled down replica set millo-nginx-rtmp-55fc4dd5cb from 1 to 0
+25m         Normal    SuccessfulDelete          replicaset/millo-nginx-rtmp-55fc4dd5cb   Deleted pod: millo-nginx-rtmp-55fc4dd5cb-jvpj8
+18m         Normal    ScalingReplicaSet         deployment/janus                         Scaled up replica set janus-75d997d488 from 0 to 1
+18m         Normal    SuccessfulCreate          replicaset/janus-75d997d488              Created pod: janus-75d997d488-c26zl
+17m         Normal    ScalingReplicaSet         deployment/millo-nginx-rtmp              Scaled up replica set millo-nginx-rtmp-58f947ffb8 from 0 to 1
+17m         Normal    SuccessfulCreate          replicaset/millo-nginx-rtmp-58f947ffb8   Created pod: millo-nginx-rtmp-58f947ffb8-m6wm9
+12m         Warning   BackOff                   pod/millo-api-6c8f6c4f7d-bm84f           Back-off restarting failed container api in pod millo-api-6c8f6c4f7d-bm84f_millo(ea292ff1-876d-455b-a0c0-06c71638fa9b)
+12m         Warning   BackOff                   pod/millo-api-7fbbfb8896-spw7s           Back-off restarting failed container api in pod millo-api-7fbbfb8896-spw7s_millo(133c8ac0-a7ce-409b-9032-1f74fc1e0c38)
+11m         Warning   BackOff                   pod/millo-api-6c8f6c4f7d-tgllp           Back-off restarting failed container api in pod millo-api-6c8f6c4f7d-tgllp_millo(5a8bc7cc-8ec8-4367-92e2-1ab0b362d93a)
+11m         Warning   BackOff                   pod/millo-api-7fbbfb8896-bsjhs           Back-off restarting failed container api in pod millo-api-7fbbfb8896-bsjhs_millo(c6aaf8b8-b065-4018-aafa-af6b175895cb)
+11m         Warning   BackOff                   pod/millo-api-7fbbfb8896-hg9rf           Back-off restarting failed container api in pod millo-api-7fbbfb8896-hg9rf_millo(f89f577d-7c80-4140-8f44-574c943f6d67)
+11m         Normal    Pulled                    pod/janus-7cbc665fcc-98prc               Container image "docker.io/library/millo-janus:latest" already present on machine and can be accessed by the pod
+10m         Warning   BackOff                   pod/millo-workers-54ff4d94cc-hl7mh       Back-off restarting failed container workers in pod millo-workers-54ff4d94cc-hl7mh_millo(2f13a257-eaa6-4c2b-933c-a0d9fa81dcff)
+10m         Normal    Pulled                    pod/millo-api-6c8f6c4f7d-tgllp           Container image "docker.io/library/millo-api-gateway:latest" already present on machine and can be accessed by the pod
+10m         Normal    Pulled                    pod/millo-api-7fbbfb8896-hg9rf           Container image "docker.io/library/millo-api-gateway:latest" already present on machine and can be accessed by the pod
+10m         Normal    Pulled                    pod/millo-api-7fbbfb8896-spw7s           Container image "docker.io/library/millo-api-gateway:latest" already present on machine and can be accessed by the pod
+9m53s       Normal    Pulled                    pod/millo-api-6c8f6c4f7d-bm84f           Container image "docker.io/library/millo-api-gateway:latest" already present on machine and can be accessed by the pod
+9m50s       Normal    Pulled                    pod/millo-workers-54ff4d94cc-hl7mh       Container image "docker.io/millo/workers:latest" already present on machine and can be accessed by the pod
+9m43s       Normal    Started                   pod/millo-api-6c8f6c4f7d-rqjpf           Container started
+9m43s       Warning   BackOff                   pod/millo-api-6c8f6c4f7d-rqjpf           Back-off restarting failed container api in pod millo-api-6c8f6c4f7d-rqjpf_millo(e0f3086a-43af-49eb-b5df-01e8c5388214)
+9m43s       Normal    Pulled                    pod/millo-api-6c8f6c4f7d-rqjpf           Container image "docker.io/library/millo-api-gateway:latest" already present on machine and can be accessed by the pod
+9m43s       Normal    Created                   pod/millo-api-6c8f6c4f7d-rqjpf           Container created
+9m21s       Normal    Pulled                    pod/millo-api-7fbbfb8896-bsjhs           Container image "docker.io/library/millo-api-gateway:latest" already present on machine and can be accessed by the pod
+8m7s        Normal    SuccessfulCreate          replicaset/millo-api-7fbbfb8896          Created pod: millo-api-7fbbfb8896-5zctp
+8m7s        Normal    SuccessfulCreate          replicaset/millo-api-7fbbfb8896          Created pod: millo-api-7fbbfb8896-5bgsj
+8m7s        Normal    SuccessfulCreate          replicaset/millo-api-7fbbfb8896          Created pod: millo-api-7fbbfb8896-vln79
+8m7s        Normal    SuccessfulCreate          replicaset/millo-api-6c8f6c4f7d          Created pod: millo-api-6c8f6c4f7d-d9bz6
+8m7s        Normal    SuccessfulCreate          replicaset/millo-api-6c8f6c4f7d          Created pod: millo-api-6c8f6c4f7d-kvzkb
+8m7s        Normal    SuccessfulCreate          replicaset/millo-api-6c8f6c4f7d          Created pod: millo-api-6c8f6c4f7d-wkv4m
+8m4s        Normal    Created                   pod/millo-api-6c8f6c4f7d-d9bz6           Container created
+8m4s        Normal    SuccessfulCreate          replicaset/millo-workers-54ff4d94cc      Created pod: millo-workers-54ff4d94cc-p697p
+8m4s        Normal    Pulled                    pod/millo-api-6c8f6c4f7d-d9bz6           Container image "docker.io/library/millo-api-gateway:latest" already present on machine and can be accessed by the pod
+8m3s        Normal    Started                   pod/millo-api-6c8f6c4f7d-d9bz6           Container started
+7m56s       Warning   BackOff                   pod/millo-api-6c8f6c4f7d-d9bz6           Back-off restarting failed container api in pod millo-api-6c8f6c4f7d-d9bz6_millo(e3a9b3fc-3510-4f63-a345-eb9687aff6a7)
+7m54s       Normal    ScalingReplicaSet         deployment/millo-api                     Scaled up replica set millo-api-66bdb6c667 from 0 to 1
+7m54s       Normal    SuccessfulCreate          replicaset/millo-api-66bdb6c667          Created pod: millo-api-66bdb6c667-h289m
+7m54s       Normal    ScalingReplicaSet         deployment/millo-workers                 Scaled up replica set millo-workers-79f5ccb6cc from 0 to 1
+7m54s       Normal    SuccessfulCreate          replicaset/millo-workers-79f5ccb6cc      Created pod: millo-workers-79f5ccb6cc-pvggx
+7m54s       Normal    SuccessfulDelete          replicaset/millo-api-6c8f6c4f7d          Deleted pod: millo-api-6c8f6c4f7d-d9bz6
+7m54s       Normal    ScalingReplicaSet         deployment/millo-api                     Scaled down replica set millo-api-6c8f6c4f7d from 3 to 2
+7m17s       Normal    Started                   pod/millo-workers-54ff4d94cc-p697p       Container started
+7m17s       Normal    Created                   pod/millo-workers-54ff4d94cc-p697p       Container created
+7m17s       Normal    Pulled                    pod/millo-workers-54ff4d94cc-p697p       Container image "docker.io/millo/workers:latest" already present on machine and can be accessed by the pod
+7m16s       Warning   BackOff                   pod/millo-workers-54ff4d94cc-p697p       Back-off restarting failed container workers in pod millo-workers-54ff4d94cc-p697p_millo(d60344c5-65c3-4f96-93ed-2ddf2db234bd)
+6m59s       Warning   BackOff                   pod/janus-7cbc665fcc-98prc               Back-off restarting failed container janus in pod janus-7cbc665fcc-98prc_millo(042b36a3-a18e-41c1-9bb6-4356288b2d0c)
+6m30s       Normal    ScalingReplicaSet         deployment/janus                         Scaled down replica set janus-7cbc665fcc from 1 to 0
+6m30s       Normal    SuccessfulDelete          replicaset/janus-7cbc665fcc              Deleted pod: janus-7cbc665fcc-98prc
+6m28s       Normal    SuccessfulDelete          replicaset/millo-workers-54ff4d94cc      Deleted pod: millo-workers-54ff4d94cc-p697p
+6m28s       Normal    ScalingReplicaSet         deployment/millo-workers                 Scaled down replica set millo-workers-54ff4d94cc from 1 to 0
+5m16s       Normal    Pulled                    pod/millo-nginx-rtmp-6f7bf6cc47-56n5l    Container image "millo/nginx-rtmp:latest" already present on machine and can be accessed by the pod
+3m51s       Warning   FailedGetResourceMetric   horizontalpodautoscaler/millo-api-hpa    failed to get cpu utilization: unable to get metrics for resource cpu: no metrics returned from resource metrics API
+2m36s       Normal    Created                   pod/millo-api-7fbbfb8896-vln79           Container created
+2m36s       Normal    Started                   pod/millo-api-7fbbfb8896-vln79           Container started
+2m36s       Normal    Pulled                    pod/millo-api-7fbbfb8896-vln79           Container image "docker.io/library/millo-api-gateway:latest" already present on machine and can be accessed by the pod
+2m31s       Normal    Created                   pod/millo-api-7fbbfb8896-5bgsj           Container created
+2m31s       Normal    Started                   pod/millo-api-7fbbfb8896-5bgsj           Container started
+2m31s       Normal    Pulled                    pod/millo-api-7fbbfb8896-5bgsj           Container image "docker.io/library/millo-api-gateway:latest" already present on machine and can be accessed by the pod
+2m30s       Normal    Started                   pod/millo-api-7fbbfb8896-5zctp           Container started
+2m30s       Normal    Pulled                    pod/millo-api-7fbbfb8896-5zctp           Container image "docker.io/library/millo-api-gateway:latest" already present on machine and can be accessed by the pod
+2m30s       Normal    Created                   pod/millo-api-7fbbfb8896-5zctp           Container created
+2m26s       Normal    Started                   pod/millo-api-6c8f6c4f7d-wkv4m           Container started
+2m26s       Normal    Created                   pod/millo-api-6c8f6c4f7d-kvzkb           Container created
+2m26s       Normal    Pulled                    pod/millo-api-6c8f6c4f7d-wkv4m           Container image "docker.io/library/millo-api-gateway:latest" already present on machine and can be accessed by the pod
+2m26s       Normal    Pulled                    pod/millo-api-6c8f6c4f7d-kvzkb           Container image "docker.io/library/millo-api-gateway:latest" already present on machine and can be accessed by the pod
+2m26s       Normal    Started                   pod/millo-api-6c8f6c4f7d-kvzkb           Container started
+2m26s       Normal    Created                   pod/millo-api-6c8f6c4f7d-wkv4m           Container created
+2m15s       Normal    Pulled                    pod/janus-75d997d488-c26zl               Container image "docker.io/library/millo-janus:latest" already present on machine and can be accessed by the pod
+2m15s       Normal    Created                   pod/janus-75d997d488-c26zl               Container created
+2m15s       Normal    Started                   pod/janus-75d997d488-c26zl               Container started
+2m14s       Normal    Created                   pod/millo-nginx-rtmp-58f947ffb8-m6wm9    Container created
+2m14s       Normal    Started                   pod/millo-nginx-rtmp-58f947ffb8-m6wm9    Container started
+2m14s       Normal    Pulled                    pod/millo-nginx-rtmp-58f947ffb8-m6wm9    Container image "millo/nginx-rtmp:latest" already present on machine and can be accessed by the pod
+97s         Warning   BackOff                   pod/millo-nginx-rtmp-6f7bf6cc47-56n5l    Back-off restarting failed container nginx-rtmp in pod millo-nginx-rtmp-6f7bf6cc47-56n5l_millo(e34e016e-a378-40f8-b0ad-88cdddfba280)
+73s         Warning   BackOff                   pod/millo-api-7fbbfb8896-vln79           Back-off restarting failed container api in pod millo-api-7fbbfb8896-vln79_millo(27c23b3d-04cc-466a-99e3-b81c0fad5d56)
+58s         Warning   BackOff                   pod/millo-api-7fbbfb8896-5bgsj           Back-off restarting failed container api in pod millo-api-7fbbfb8896-5bgsj_millo(47fa6d98-7b66-4f88-bd4b-c413c4c8fd68)
+57s         Warning   BackOff                   pod/millo-api-7fbbfb8896-5zctp           Back-off restarting failed container api in pod millo-api-7fbbfb8896-5zctp_millo(1d6ce4f6-f1ef-42e4-9c6c-ecd3fe35976f)
+54s         Warning   BackOff                   pod/millo-api-6c8f6c4f7d-wkv4m           Back-off restarting failed container api in pod millo-api-6c8f6c4f7d-wkv4m_millo(219d8a1b-84ff-41db-83fa-de2bc25e6093)
+48s         Warning   BackOff                   pod/janus-75d997d488-c26zl               Back-off restarting failed container janus in pod janus-75d997d488-c26zl_millo(a6945858-2186-47f9-bb36-cac0ca30316e)
+38s         Warning   BackOff                   pod/millo-api-6c8f6c4f7d-kvzkb           Back-off restarting failed container api in pod millo-api-6c8f6c4f7d-kvzkb_millo(552a5394-e105-4456-943b-0ba358d00d1c)
+37s         Normal    Pulled                    pod/millo-workers-79f5ccb6cc-pvggx       Container image "docker.io/millo/workers:latest" already present on machine and can be accessed by the pod
+37s         Normal    Created                   pod/millo-workers-79f5ccb6cc-pvggx       Container created
+37s         Normal    Started                   pod/millo-workers-79f5ccb6cc-pvggx       Container started
+35s         Warning   BackOff                   pod/millo-workers-79f5ccb6cc-pvggx       Back-off restarting failed container workers in pod millo-workers-79f5ccb6cc-pvggx_millo(6d173899-05c9-46fe-9389-4550fcdd5c3d)
+23s         Normal    SuccessfulCreate          replicaset/millo-workers-6cddfdbd65      Created pod: millo-workers-6cddfdbd65-zsjsk
+23s         Normal    SuccessfulCreate          replicaset/millo-api-5555fc98f9          Created pod: millo-api-5555fc98f9-s29zt
+23s         Normal    SuccessfulDelete          replicaset/millo-api-6c8f6c4f7d          Deleted pod: millo-api-6c8f6c4f7d-wkv4m
+23s         Normal    ScalingReplicaSet         deployment/millo-api                     Scaled up replica set millo-api-5555fc98f9 from 0 to 1
+23s         Normal    ScalingReplicaSet         deployment/millo-api                     Scaled down replica set millo-api-6c8f6c4f7d from 2 to 1
+23s         Normal    ScalingReplicaSet         deployment/millo-workers                 Scaled up replica set millo-workers-6cddfdbd65 from 0 to 1
+22s         Normal    SuccessfulCreate          replicaset/janus-7f87d48658              Created pod: janus-7f87d48658-9gmj6
+22s         Normal    ScalingReplicaSet         deployment/janus                         Scaled up replica set janus-7f87d48658 from 0 to 1
+22s         Normal    ScalingReplicaSet         deployment/millo-nginx-rtmp              Scaled down replica set millo-nginx-rtmp-6f7bf6cc47 from 1 to 0
+22s         Normal    ScalingReplicaSet         deployment/millo-nginx-rtmp              Scaled up replica set millo-nginx-rtmp-c5984747c from 0 to 1
+22s         Normal    SuccessfulCreate          replicaset/millo-nginx-rtmp-c5984747c    Created pod: millo-nginx-rtmp-c5984747c-zpqrr
+22s         Normal    SuccessfulDelete          replicaset/millo-nginx-rtmp-6f7bf6cc47   Deleted pod: millo-nginx-rtmp-6f7bf6cc47-56n5l
+20s         Normal    SuccessfulDelete          replicaset/millo-workers-79f5ccb6cc      Deleted pod: millo-workers-79f5ccb6cc-pvggx
+20s         Normal    ScalingReplicaSet         deployment/millo-workers                 Scaled down replica set millo-workers-79f5ccb6cc from 1 to 0
+8s          Normal    Pulled                    pod/millo-api-66bdb6c667-h289m           Container image "docker.io/library/millo-api-gateway:latest" already present on machine and can be accessed by the pod
+8s          Normal    Started                   pod/millo-api-66bdb6c667-h289m           Container started
+8s          Normal    Created                   pod/millo-api-66bdb6c667-h289m           Container created
+7s          Normal    Started                   pod/millo-workers-6cddfdbd65-zsjsk       Container started
+7s          Normal    Pulled                    pod/millo-workers-6cddfdbd65-zsjsk       Container image "docker.io/millo/workers:latest" already present on machine and can be accessed by the pod
+7s          Normal    Created                   pod/millo-workers-6cddfdbd65-zsjsk       Container created
+6s          Warning   BackOff                   pod/millo-workers-6cddfdbd65-zsjsk       Back-off restarting failed container workers in pod millo-workers-6cddfdbd65-zsjsk_millo(3153f21c-a0c1-45aa-9bfa-4833e4a550f4)
+6s          Warning   BackOff                   pod/millo-api-66bdb6c667-h289m           Back-off restarting failed container api in pod millo-api-66bdb6c667-h289m_millo(73b1438c-6d1a-4848-9fa9-b4c1e58af9bc)
+6s          Normal    SuccessfulDelete          replicaset/janus-75d997d488              Deleted pod: janus-75d997d488-c26zl
+6s          Normal    Pulled                    pod/janus-7f87d48658-9gmj6               Container image "docker.io/library/millo-janus:latest" already present on machine and can be accessed by the pod
+6s          Normal    ScalingReplicaSet         deployment/janus                         Scaled down replica set janus-75d997d488 from 1 to 0
+6s          Normal    Created                   pod/janus-7f87d48658-9gmj6               Container created
+6s          Normal    Started                   pod/janus-7f87d48658-9gmj6               Container started
+6s          Normal    UpdatedLoadBalancer       service/janus                            Updated LoadBalancer with new IPs: [144.126.139.87] -> [144.126.139.87]
+6s          Normal    UpdatedLoadBalancer       service/janus                            Updated LoadBalancer with new IPs: [] -> [144.126.139.87]
+5s          Warning   BackOff                   pod/janus-7f87d48658-9gmj6               Back-off restarting failed container janus in pod janus-7f87d48658-9gmj6_millo(0ec89a46-9356-4a42-a3ae-7bd695c6c994)
+5s          Warning   UnAvailableLoadBalancer   service/janus                            There are no available nodes for LoadBalancer
+4s          Normal    Started                   pod/millo-nginx-rtmp-c5984747c-zpqrr     Container started
+4s          Warning   BackOff                   pod/millo-nginx-rtmp-c5984747c-zpqrr     Back-off restarting failed container nginx-rtmp in pod millo-nginx-rtmp-c5984747c-zpqrr_millo(60871c30-4c59-4fa5-ab58-02ffb252afd8)
+4s          Normal    Pulled                    pod/millo-nginx-rtmp-c5984747c-zpqrr     Container image "millo/nginx-rtmp:latest" already present on machine and can be accessed by the pod
+4s          Normal    Created                   pod/millo-nginx-rtmp-c5984747c-zpqrr     Container created
+3s          Warning   BackOff                   pod/millo-nginx-rtmp-58f947ffb8-m6wm9    Back-off restarting failed container nginx-rtmp in pod millo-nginx-rtmp-58f947ffb8-m6wm9_millo(ad58d155-a13b-4d11-83e9-b3740c8b2297)

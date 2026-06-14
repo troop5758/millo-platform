@@ -103,20 +103,6 @@ async function subscriptionsRoutes(app) {
   });
 
   /* ── GET /subscriptions/products ── */
-  app.get('/subscriptions/products', async (request, reply) => {
-    const { creatorId, includeInactive } = request.query ?? {};
-    const query = String(includeInactive || '').toLowerCase() === 'true' ? {} : { active: true };
-    if (creatorId) {
-      if (!validateId(creatorId, reply)) return;
-      query.creatorId = creatorId;
-    }
-
-    const list = await db.SubscriptionTier.find(query)
-      .sort({ sortOrder: 1, tierId: 1 })
-      .lean();
-    const products = list.map((d) => toProductShape(d));
-    return reply.send({ products });
-  });
 
   /* ── GET /subscriptions/products/:id ── */
   app.get('/subscriptions/products/:id', async (request, reply) => {
@@ -128,7 +114,7 @@ async function subscriptionsRoutes(app) {
   });
 
   /* ── PATCH /subscriptions/products/:id ── */
-  app.patch('/subscriptions/products/:id', async (request, reply) => {
+ app.patch('/subscriptions/products/:id', async (request, reply) => {
     const user = await authUser(request);
     if (!user) return reply.status(401).send({ error: 'UNAUTHORIZED' });
 
@@ -155,7 +141,7 @@ async function subscriptionsRoutes(app) {
     await tier.save();
     return reply.send(toProductShape(tier));
   });
-
+  
   /* ── DELETE /subscriptions/products/:id ── */
   app.delete('/subscriptions/products/:id', async (request, reply) => {
     const user = await authUser(request);
@@ -175,9 +161,9 @@ async function subscriptionsRoutes(app) {
   });
 
   /* ── User Subscription CRUD (/api/subscriptions + /subscriptions) ── */
-  const subPaths = ['/api/subscriptions', '/subscriptions'];
+    for (const route of ['/api/subscriptions', '/subscriptions']) {
+    app.get(route, async (request, reply) => {  
 
-  app.get(subPaths, async (request, reply) => {
     const user = await authUser(request);
     if (!user) return reply.status(401).send({ error: 'UNAUTHORIZED' });
     const region = resolveRegionFromRequest(request);
@@ -188,21 +174,36 @@ async function subscriptionsRoutes(app) {
       subscriptions: list.map((row) => toSubscriptionApiShape(row, region)),
     });
   });
+  }
 
-  app.get(
-    ['/api/subscriptions/:id', '/subscriptions/:id'],
-    async (request, reply) => {
-      const user = await authUser(request);
-      if (!user) return reply.status(401).send({ error: 'UNAUTHORIZED' });
-      const { id } = request.params;
-      if (!id || !validateId(id, reply)) return;
-      const region = resolveRegionFromRequest(request);
-      const row = await db.Subscription.findOne({ _id: id, userId: user._id }).lean();
-      if (!row) return reply.status(404).send({ error: 'NOT_FOUND' });
-      return reply.send({ subscription: toSubscriptionApiShape(row, region) });
-    },
-  );
+   for (const route of ['/api/subscriptions/:id', '/subscriptions/:id']) {
+   app.get(route, async (request, reply) => {
+    const user = await authUser(request);
+    if (!user) return reply.status(401).send({ error: 'UNAUTHORIZED' });
 
+    const { id } = request.params;
+    if (!id || !validateId(id, reply)) return;
+
+    const region = resolveRegionFromRequest(request);
+    const row = await db.Subscription.findOne({
+      _id: id,
+      userId: user._id,
+    }).lean();
+
+    if (!row) {
+      return reply.status(404).send({ error: 'NOT_FOUND' });
+    }
+
+    return reply.send({
+      subscription: toSubscriptionApiShape(row, region),
+    });
+  });
+ }
+  /* ── User Subscription CRUD ── */
+    const subPaths = [
+    '/api/subscriptions',
+    '/subscriptions',
+  ];
   app.post(subPaths, async (request, reply) => {
     const user = await authUser(request);
     if (!user) return reply.status(401).send({ error: 'UNAUTHORIZED' });
@@ -258,10 +259,9 @@ async function subscriptionsRoutes(app) {
 
     return reply.status(201).send({ subscription: toSubscriptionApiShape(sub.toObject(), region) });
   });
+  for (const route of ['/api/subscriptions/:id', '/subscriptions/:id']) {
+  app.patch(route, async (request, reply) => {
 
-  app.patch(
-    ['/api/subscriptions/:id', '/subscriptions/:id'],
-    async (request, reply) => {
       const user = await authUser(request);
       if (!user) return reply.status(401).send({ error: 'UNAUTHORIZED' });
       const { id } = request.params;
@@ -291,12 +291,12 @@ async function subscriptionsRoutes(app) {
       });
 
       return reply.send({ subscription: toSubscriptionApiShape(sub.toObject(), region) });
-    },
-  );
+     });
+   }
 
-  app.delete(
-    ['/api/subscriptions/:id', '/subscriptions/:id'],
-    async (request, reply) => {
+  for (const route of ['/api/subscriptions/:id', '/subscriptions/:id']) {
+  app.delete(route, async (request, reply) => {
+
       const user = await authUser(request);
       if (!user) return reply.status(401).send({ error: 'UNAUTHORIZED' });
       const { id } = request.params;
@@ -317,8 +317,9 @@ async function subscriptionsRoutes(app) {
       });
 
       return reply.status(204).send();
-    },
-  );
-}
+
+      });
+    }
+   }
 
 module.exports = { subscriptionsRoutes };

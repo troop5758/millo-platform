@@ -1,0 +1,18 @@
+NAME                                READY   STATUS             RESTARTS        AGE     IP            NODE         NOMINATED NODE   READINESS GATES
+janus-7f87d48658-9gmj6              0/1     Error              2 (18s ago)     21s     10.42.0.122   vmi2435915   <none>           <none>
+millo-api-5555fc98f9-s29zt          0/1     Pending            0               22s     <none>        <none>       <none>           <none>
+millo-api-66bdb6c667-h289m          0/1     CrashLoopBackOff   2 (7s ago)      7m53s   10.42.0.121   vmi2435915   <none>           <none>
+millo-api-6c8f6c4f7d-kvzkb          0/1     CrashLoopBackOff   6 (2m25s ago)   8m6s    10.42.0.114   vmi2435915   <none>           <none>
+millo-api-7fbbfb8896-5bgsj          0/1     CrashLoopBackOff   6 (2m30s ago)   8m6s    10.42.0.118   vmi2435915   <none>           <none>
+millo-api-7fbbfb8896-5zctp          0/1     CrashLoopBackOff   6 (2m29s ago)   8m6s    10.42.0.115   vmi2435915   <none>           <none>
+millo-api-7fbbfb8896-vln79          0/1     CrashLoopBackOff   6 (2m35s ago)   8m6s    10.42.0.116   vmi2435915   <none>           <none>
+millo-nginx-rtmp-58f947ffb8-m6wm9   0/1     CrashLoopBackOff   6 (2m13s ago)   17m     10.42.0.110   vmi2435915   <none>           <none>
+millo-nginx-rtmp-c5984747c-zpqrr    0/1     Error              2 (17s ago)     21s     10.42.0.123   vmi2435915   <none>           <none>
+millo-web-64b8555b44-vp5wd          1/1     Running            0               72m     10.42.0.103   vmi2435915   <none>           <none>
+millo-workers-6cddfdbd65-zsjsk      0/1     Error              2 (17s ago)     22s     10.42.0.120   vmi2435915   <none>           <none>
+redis-0                             1/1     Running            0               25h     10.42.0.53    vmi2435915   <none>           <none>
+redis-1                             1/1     Running            0               25h     10.42.0.54    vmi2435915   <none>           <none>
+redis-2                             1/1     Running            0               25h     10.42.0.55    vmi2435915   <none>           <none>
+redis-3                             1/1     Running            0               25h     10.42.0.56    vmi2435915   <none>           <none>
+redis-4                             1/1     Running            0               25h     10.42.0.57    vmi2435915   <none>           <none>
+redis-5                             1/1     Running            0               25h     10.42.0.63    vmi2435915   <none>           <none>

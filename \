@@ -1,0 +1,41 @@
+Name:                   janus
+Namespace:              millo
+CreationTimestamp:      Fri, 12 Jun 2026 04:07:04 +0200
+Labels:                 app=janus
+Annotations:            deployment.kubernetes.io/revision: 11
+Selector:               app=janus
+Replicas:               1 desired | 1 updated | 1 total | 0 available | 1 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:       app=janus
+  Annotations:  kubectl.kubernetes.io/restartedAt: 2026-06-13T05:48:33+02:00
+  Containers:
+   janus:
+    Image:       docker.io/library/millo-janus:latest
+    Ports:       8088/TCP (http), 8089/TCP (https), 8188/TCP (ws), 8189/TCP (wss), 10000/UDP (rtp)
+    Host Ports:  0/TCP (http), 0/TCP (https), 0/TCP (ws), 0/TCP (wss), 0/UDP (rtp)
+    Limits:
+      cpu:     1
+      memory:  512Mi
+    Requests:
+      cpu:         200m
+      memory:      256Mi
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Progressing    True    NewReplicaSetAvailable
+  Available      False   MinimumReplicasUnavailable
+OldReplicaSets:  janus-6d69f79b4 (0/0 replicas created), janus-869d47b75c (0/0 replicas created), janus-75ff8cf7c9 (0/0 replicas created), janus-67f886dc5f (0/0 replicas created), janus-7994d87bf7 (0/0 replicas created), janus-66c4c58968 (0/0 replicas created), janus-84998d67b7 (0/0 replicas created), janus-975b9dbbb (0/0 replicas created), janus-6ff5f68b79 (0/0 replicas created), janus-7cbc665fcc (0/0 replicas created)
+NewReplicaSet:   janus-75d997d488 (1/1 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  11m   deployment-controller  Scaled up replica set janus-75d997d488 from 0 to 1
+  Normal  ScalingReplicaSet  3s    deployment-controller  Scaled down replica set janus-7cbc665fcc from 1 to 0

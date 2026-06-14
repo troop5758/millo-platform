@@ -1,21 +1,15 @@
-FROM node:20-alpine AS base
+FROM node:20-alpine
+
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
-COPY packages/workers/package.json ./packages/workers/
-COPY packages/database/package.json ./packages/database/
-COPY packages/billing/package.json ./packages/billing/
-COPY packages/level-trust/package.json ./packages/level-trust/
+COPY package*.json ./
+COPY packages ./packages
+COPY config ./config
 
-RUN npm ci --ignore-scripts --omit=dev
+RUN npm ci --ignore-scripts
 
-# FFmpeg for video+audio composition worker (content compose)
 RUN apk add --no-cache ffmpeg
 
-COPY packages/workers/ ./packages/workers/
-COPY packages/database/ ./packages/database/
-COPY packages/billing/ ./packages/billing/
-COPY packages/level-trust/ ./packages/level-trust/
-
 ENV NODE_ENV=production
-CMD ["node", "packages/workers/src/index.js"]
+
+CMD ["node","packages/workers/src/index.js"]

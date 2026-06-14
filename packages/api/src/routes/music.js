@@ -92,7 +92,10 @@ async function musicRoutes(app) {
   });
 
   /* ── Trending sound leaderboard (ZSET trending_sounds, score = viral_score, updated every 5 min). GET /music/trending and GET /sounds/trending. Optional ?region=us|brazil|india for geographic trend. ── */
-  app.get(['/music/trending', '/sounds/trending'], async (request, reply) => {
+  app.get('/music/trending', async (request, reply) => {
+    });
+
+    app.get('/sounds/trending', async (request, reply) => {
     const { limit = 20, genre, cluster, region, expand } = request.query ?? {};
     const lim = Math.min(Number(limit), 50);
     let ids = [];

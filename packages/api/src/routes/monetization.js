@@ -13,10 +13,9 @@ async function authUser(request) {
 
 async function monetizationRoutes(app) {
   app.register(async (router) => {
-    router.addHook('preHandler', async (request, reply, done) => {
-      request.user = await authUser(request);
-      done();
-    });
+      router.addHook('preHandler', async (request, reply) => {
+        request.user = await authUser(request);
+      });
     router.post('/event', controller.processEvent);
     router.get('/funnels', controller.listFunnels);
     router.post('/funnels', controller.createFunnel);

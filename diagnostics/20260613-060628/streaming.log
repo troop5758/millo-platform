@@ -1,0 +1,3 @@
+Found 2 pods, using pod/millo-nginx-rtmp-58f947ffb8-m6wm9
+2026/06/13 04:04:38 [emerg] 1#1: unknown directive "content_by_lua_block" in /etc/nginx/nginx.conf:79
+nginx: [emerg] unknown directive "content_by_lua_block" in /etc/nginx/nginx.conf:79

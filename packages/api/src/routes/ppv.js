@@ -14,9 +14,8 @@ async function authUser(request) {
 }
 
 async function ppvRoutes(app) {
-  app.addHook('preHandler', async (request, reply, done) => {
+  app.addHook('preHandler', async (request, reply) => {
     request.user = await authUser(request);
-    done();
   });
 
   /* ── PPV Content CRUD ── */

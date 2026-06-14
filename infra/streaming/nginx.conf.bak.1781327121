@@ -76,6 +76,13 @@ http {
 
     location /hooks/on_publish {
       default_type 'application/json';
+      content_by_lua_block {
+        -- Forward to Millo API to verify stream key
+        local http = require "resty.http"
+        local httpc = http.new()
+        local res, err = httpc:request_uri(os.getenv("API_BASE") .. "/live/ingest/on_publish", {
+          method  = "POST",
+          headers = { ["Content-Type"] = "application/x-www-form-urlencoded" },
           body    = ngx.req.get_body_data() or "",
         })
         if not res or res.status ~= 200 then

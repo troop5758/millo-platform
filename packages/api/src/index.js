@@ -105,7 +105,7 @@ const { aiRoutes }         = require('./routes/ai');
 const { legalRoutes }      = require('./routes/legal');
 const { musicRoutes }      = require('./routes/music');
 const { mlRoutes }        = require('./routes/ml');
-const { subscriptionsRoutes } = require('./routes/subscriptions');
+//const { subscriptionsRoutes } = require('./routes/subscriptions');
 const { discoveryRoutes } = require('./routes/discovery');
 const { feedRoutes } = require('./routes/feed');
 const { platformSurfaceRoutes } = require('./routes/platformSurfaceRoutes');
@@ -202,7 +202,7 @@ const start = async () => {
   await legalRoutes(app);
   await musicRoutes(app);
   await mlRoutes(app);
-  await subscriptionsRoutes(app);
+ // await subscriptionsRoutes(app);
   await discoveryRoutes(app);
   await feedRoutes(app);
   await platformSurfaceRoutes(app);

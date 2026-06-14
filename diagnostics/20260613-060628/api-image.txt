@@ -1,0 +1,284 @@
+===== API IMAGE =====
+/app
+/app/.cursor
+/app/.cursor/rules
+/app/.turbo
+/app/.turbo/cache
+/app/apps
+/app/apps/ai-economic-engine
+/app/apps/ai-economic-engine/backend
+/app/apps/api
+/app/apps/api/logs
+/app/apps/api/node_modules
+/app/apps/autonomous-economic-simulation
+/app/apps/autonomous-economic-simulation/backend
+/app/apps/economic-governance-layer
+/app/apps/economic-governance-layer/backend
+/app/apps/economy-control-center
+/app/apps/economy-control-center/backend
+/app/apps/economy-control-center/frontend
+/app/apps/liquidity-routing-engine
+/app/apps/liquidity-routing-engine/backend
+/app/apps/millo-os
+/app/apps/millo-os/.next
+/app/apps/millo-os/.turbo
+/app/apps/millo-os/node_modules
+/app/apps/millo-os/public
+/app/apps/millo-os/src
+/app/apps/mobile
+/app/apps/mobile/node_modules
+/app/apps/planetary-financial-coordination
+/app/apps/planetary-financial-coordination/backend
+/app/apps/recursive-economic-intelligence
+/app/apps/recursive-economic-intelligence/backend
+/app/apps/sovereign-settlement-layer
+/app/apps/sovereign-settlement-layer/backend
+/app/apps/treasury-intelligence
+/app/apps/treasury-intelligence/backend
+/app/apps/tv
+/app/apps/tv/.turbo
+/app/apps/tv/node_modules
+/app/apps/web
+/app/apps/web/.turbo
+/app/apps/web/dist
+/app/apps/web/node_modules
+/app/backups
+/app/backups/redis-fix-20260509-220428
+/app/backups/redis-fix-20260509-220428/opt
+/app/certs
+/app/cloudflare
+/app/config
+/app/frontend
+/app/frontend/millo-frontend
+/app/frontend/millo-frontend/.git
+/app/frontend/millo-frontend/app
+/app/frontend/millo-frontend/build
+/app/frontend/millo-frontend/dist
+/app/frontend/millo-frontend/node_modules
+/app/frontend/millo-frontend/public
+/app/frontend/millo-frontend/src
+/app/legal
+/app/logs
+/app/ml
+/app/node_modules
+/app/node_modules/.bin
+/app/node_modules/@ampproject
+/app/node_modules/@aws
+/app/node_modules/@aws-crypto
+/app/node_modules/@aws-crypto/crc32
+/app/node_modules/@aws-crypto/crc32c
+/app/node_modules/@aws-crypto/sha1-browser
+/app/node_modules/@aws-crypto/sha256-browser
+/app/node_modules/@aws-crypto/sha256-js
+/app/node_modules/@aws-crypto/supports-web-crypto
+/app/node_modules/@aws-crypto/util
+/app/node_modules/@aws-sdk
+/app/node_modules/@aws-sdk/client-s3
+/app/node_modules/@aws-sdk/client-ses
+/app/node_modules/@aws-sdk/core
+/app/node_modules/@aws-sdk/crc64-nvme
+/app/node_modules/@aws-sdk/credential-provider-env
+/app/node_modules/@aws-sdk/credential-provider-http
+/app/node_modules/@aws-sdk/credential-provider-ini
+/app/node_modules/@aws-sdk/credential-provider-login
+/app/node_modules/@aws-sdk/credential-provider-node
+/app/node_modules/@aws-sdk/credential-provider-process
+/app/node_modules/@aws-sdk/credential-provider-sso
+/app/node_modules/@aws-sdk/credential-provider-web-identity
+/app/node_modules/@aws-sdk/middleware-bucket-endpoint
+/app/node_modules/@aws-sdk/middleware-expect-continue
+/app/node_modules/@aws-sdk/middleware-flexible-checksums
+/app/node_modules/@aws-sdk/middleware-host-header
+/app/node_modules/@aws-sdk/middleware-location-constraint
+/app/node_modules/@aws-sdk/middleware-logger
+/app/node_modules/@aws-sdk/middleware-recursion-detection
+/app/node_modules/@aws-sdk/middleware-sdk-s3
+/app/node_modules/@aws-sdk/middleware-ssec
+/app/node_modules/@aws-sdk/middleware-user-agent
+/app/node_modules/@aws-sdk/nested-clients
+/app/node_modules/@aws-sdk/region-config-resolver
+/app/node_modules/@aws-sdk/signature-v4-multi-region
+/app/node_modules/@aws-sdk/token-providers
+
+===== PACKAGE =====
+{
+  "name": "millo",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Millo platform monorepo",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "workspaces": [
+    "packages/ads",
+    "packages/ai-optimization",
+    "packages/api",
+    "packages/battles",
+    "packages/billing",
+    "packages/compliance",
+    "packages/dashboards",
+    "packages/database",
+    "packages/discovery",
+    "packages/dm-monetization",
+    "packages/economy",
+    "packages/level-trust",
+    "packages/live",
+    "packages/milla",
+    "packages/monetization",
+    "packages/notifications",
+    "packages/ppv",
+    "packages/security",
+    "packages/self-observation",
+    "packages/shared",
+    "packages/tv",
+    "packages/web",
+    "packages/workers"
+  ],
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@vitest/coverage-v8": "^1.6.0",
+    "supertest": "^7.2.2",
+    "vitest": "^1.6.1"
+  },
+  "overrides": {
+    "fastify": "5.8.4",
+    "vite": "5.4.21"
+  },
+  "scripts": {
+    "dev": "npm run dev -w @millo/api",
+    "lint": "node scripts/lint.js",
+    "build": "npm run build --workspaces --if-present",
+    "deploy": "node scripts/deploy.js",
+    "start:api": "npm run start -w @millo/api",
+    "start:workers": "npm run start -w @millo/workers",
+    "update:fx-rates": "node scripts/update-fx-rates.js",
+    "retention:purge": "node scripts/retention-purge.js",
+    "analytics:snapshot": "node scripts/analytics-snapshot.js",
+    "ppv:scheduled-release": "node scripts/ppv-scheduled-release.js",
+    "payouts:process": "node scripts/process-payouts.js",
+    "seed:creator-tiers": "node scripts/seed-creator-tiers.js",
+    "seed:creator-badges": "node scripts/seed-creator-badges.js",
+    "seed:gifts": "node scripts/seed-gifts.js",
+    "validate:bootstrap": "node scripts/validate-bootstrap.js",
+    "validate:schemas": "node scripts/validate-schemas.js",
+    "test:level-trust": "node --test packages/level-trust/src/constants.test.js packages/level-trust/src/gate.test.js",
+    "validate:phase1": "node scripts/validate-phase1.js",
+    "validate:phase1.5": "node scripts/validate-phase1.5.js",
+    "validate:phase2": "node scripts/validate-phase2.js",
+    "validate:phase3": "node scripts/validate-phase3.js",
+    "validate:phase4": "node scripts/validate-phase4.js",
+    "validate:phase5": "node scripts/validate-phase5.js",
+    "validate:phase5.5": "node scripts/validate-phase5.5.js",
+    "validate:phase5.6": "node scripts/validate-phase5.6.js",
+    "validate:phase6": "node scripts/validate-phase6.js",
+    "validate:phase6.2": "node scripts/validate-phase6.2.js",
+    "validate:phase7": "node scripts/validate-phase7.js",
+    "validate:phase8": "node scripts/validate-phase8.js",
+    "validate:phase9": "node scripts/validate-phase9.js",
+    "validate:phase10": "node scripts/validate-phase10.js",
+    "validate:phase11": "node scripts/validate-phase11.js",
+    "validate:phase12": "node scripts/validate-phase12.js",
+    "validate:phase13": "node scripts/validate-phase13.js",
+    "validate:phase14": "node scripts/validate-phase14.js",
+    "validate:phase15": "node scripts/validate-phase15.js",
+    "validate:phase15-infra": "node scripts/validate-phase15-infra.js",
+    "validate:phase16": "node scripts/validate-phase16.js",
+    "validate:phase17": "node scripts/validate-phase17.js",
+    "validate:phase18": "node scripts/validate-phase18.js",
+    "validate:phase19": "node scripts/validate-phase19.js",
+    "validate:phase20": "node scripts/validate-phase20.js",
+    "integration-tests": "node scripts/integration-tests.js",
+    "security:scan": "bash scripts/security/owasp-scan.sh",
+    "launch:check": "bash scripts/launch-check.sh",
+    "load-test": "node scripts/load-test.js",
+    "production-gate": "node scripts/production-gate.js",
+    "validate:final": "node scripts/validate-final-phase.js",
+    "test": "vitest run",
+    "test:ci-parity": "node scripts/ci-parity-test.js",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:install": "playwright install chromium",
+    "env:validate": "node scripts/env-validate.js",
+    "preflight": "node scripts/env-validate.js",
+    "clean:node_modules": "node scripts/clean-node-modules.js",
+    "clean:install": "node scripts/clean-node-modules.js && npm install",
+    "install:verify": "node scripts/install-verify.js",
+    "install:ci": "npm ci",
+    "lockfile:sync": "npm install --no-audit --no-fund --package-lock-only",
+    "bootstrap:admin": "node scripts/bootstrap-initial-admin.js",
+    "db:sync-indexes": "node scripts/sync-indexes.js",
+    "go-live-gate": "node scripts/go-live-gate.js",
+    "staging:smoke": "bash scripts/staging-smoke.sh",
+    "staging:smoke:win": "powershell -ExecutionPolicy Bypass -File scripts/staging-smoke.ps1"
+  }
+}
+===== API ENTRY =====
+/app/packages/api/src/core/money/index.js
+/app/packages/api/src/core/commerce/index.js
+/app/packages/api/src/core/notifications/index.js
+/app/packages/api/src/core/control-plane/index.js
+/app/packages/api/src/core/support/index.js
+/app/packages/api/src/core/live/index.js
+/app/packages/api/src/core/security/index.js
+/app/packages/api/src/core/trust/index.js
+/app/packages/api/src/core/feed/index.js
+/app/packages/api/src/core/observability/index.js
+/app/packages/api/src/core/auth/index.js
+/app/packages/api/src/services/financialIntegrity/index.js
+/app/packages/api/src/services/kyc/index.js
+/app/packages/api/src/services/payments/index.js
+/app/packages/api/src/index.js
+/app/packages/api/src/sockets/index.js
+/app/packages/api/src/payments/index.js
+/app/packages/api/node_modules/light-my-request/node_modules/process-warning/index.js
+/app/packages/api/node_modules/light-my-request/index.js
+/app/packages/api/node_modules/pino-abstract-transport/index.js
+/app/packages/api/node_modules/find-my-way/index.js
+/app/packages/api/node_modules/cookie/dist/index.js
+/app/packages/api/node_modules/ajv-formats/dist/index.js
+/app/packages/api/node_modules/fast-uri/index.js
+/app/packages/api/node_modules/ajv/dist/refs/json-schema-2019-09/index.js
+/app/packages/api/node_modules/ajv/dist/refs/json-schema-2020-12/index.js
+/app/packages/api/node_modules/ajv/dist/vocabularies/dynamic/index.js
+/app/packages/api/node_modules/ajv/dist/vocabularies/core/index.js
+/app/packages/api/node_modules/ajv/dist/vocabularies/jtd/index.js
+/app/packages/api/node_modules/ajv/dist/vocabularies/discriminator/index.js
+/app/packages/api/node_modules/ajv/dist/vocabularies/validation/index.js
+/app/packages/api/node_modules/ajv/dist/vocabularies/unevaluated/index.js
+/app/packages/api/node_modules/ajv/dist/vocabularies/applicator/index.js
+/app/packages/api/node_modules/ajv/dist/vocabularies/format/index.js
+/app/packages/api/node_modules/ajv/dist/standalone/index.js
+/app/packages/api/node_modules/ajv/dist/types/index.js
+/app/packages/api/node_modules/ajv/dist/compile/validate/index.js
+/app/packages/api/node_modules/ajv/dist/compile/index.js
+/app/packages/api/node_modules/ajv/dist/compile/codegen/index.js
+/app/packages/api/node_modules/json-schema-traverse/index.js
+/app/packages/api/node_modules/ret/dist/index.js
+/app/packages/api/node_modules/ret/dist/types/index.js
+/app/packages/api/node_modules/pino-std-serializers/index.js
+/app/packages/api/node_modules/@sendgrid/client/index.js
+/app/packages/api/node_modules/@sendgrid/helpers/constants/index.js
+/app/packages/api/node_modules/@sendgrid/helpers/index.js
+/app/packages/api/node_modules/@sendgrid/helpers/helpers/index.js
+/app/packages/api/node_modules/@sendgrid/helpers/classes/index.js
+/app/packages/api/node_modules/@sendgrid/mail/index.js
+/app/packages/api/node_modules/fast-json-stringify/index.js
+/app/packages/api/node_modules/process-warning/index.js
+/app/packages/api/node_modules/json-schema-ref-resolver/index.js
+/app/packages/api/node_modules/thread-stream/index.js
+/app/packages/api/node_modules/thread-stream/test/pkg/index.js
+/app/packages/api/node_modules/sonic-boom/index.js
+/app/packages/api/node_modules/safe-regex2/index.js
+/app/packages/api/node_modules/fastify/test/bundler/webpack/src/index.js
+/app/packages/api/node_modules/fastify/test/bundler/esbuild/src/index.js
+/app/packages/api/node_modules/pino/test/fixtures/eval/index.js
+/app/packages/api/node_modules/pino/test/fixtures/transport/index.js
+/app/packages/api/node_modules/@fastify/helmet/index.js
+/app/packages/api/node_modules/@fastify/cors/index.js
+/app/packages/api/node_modules/@fastify/rate-limit/index.js
+/app/packages/api/node_modules/@fastify/fast-json-stringify-compiler/index.js
+/app/packages/api/node_modules/@fastify/merge-json-schemas/index.js
+/app/packages/api/node_modules/@fastify/ajv-compiler/index.js
+/app/packages/api/node_modules/@fastify/websocket/index.js
